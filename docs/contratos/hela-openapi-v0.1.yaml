@@ -1,0 +1,3706 @@
+openapi: 3.0.3
+info:
+  title: HELA API
+  version: 0.1.0
+  description: Contrato de línea base para HELA, plataforma SaaS web de gestión de restaurantes. Las operaciones internas
+    resuelven restaurantId, branchId, roles, permisos y módulos habilitados desde el contexto autenticado. Los endpoints públicos
+    de Carta QR quedan limitados al alcance codificado en el QR. Las operaciones SaaS requieren privilegios de Super Admin
+    HELA.
+servers:
+- url: http://localhost:3000
+  description: Entorno local de desarrollo
+tags:
+- name: Autenticación
+- name: Usuarios y permisos
+- name: Restaurante y sucursales
+- name: Catálogo
+- name: Carta QR pública
+- name: Mesas y atención
+- name: Pedidos
+- name: Comandas
+- name: Caja
+- name: Pagos
+- name: Documentos
+- name: Inventario
+- name: Compras y proveedores
+- name: Reportes
+- name: Auditoría
+- name: Configuración
+- name: Administración SaaS
+- name: Impresión
+security:
+- bearerAuth: []
+paths:
+  /api/v1/autenticacion/sesiones:
+    post:
+      tags:
+      - Autenticación
+      summary: Iniciar sesión
+      operationId: iniciarSesion
+      x-hela-cu:
+      - CU-01
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      security: []
+  /api/v1/autenticacion/sesiones/renovar:
+    post:
+      tags:
+      - Autenticación
+      summary: Renovar sesión
+      operationId: renovarSesion
+      x-hela-cu:
+      - CU-01
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      security: []
+  /api/v1/autenticacion/sesiones/actual:
+    delete:
+      tags:
+      - Autenticación
+      summary: Cerrar sesión
+      operationId: cerrarSesion
+      x-hela-cu:
+      - CU-01
+      responses:
+        '204':
+          description: Operación exitosa
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/usuarios:
+    get:
+      tags:
+      - Usuarios y permisos
+      summary: Listar usuarios
+      operationId: listarUsuarios
+      x-hela-cu:
+      - CU-02
+      parameters:
+      - name: pagina
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: tamano
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: activo
+        in: query
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListaUsuarios'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      tags:
+      - Usuarios y permisos
+      summary: Crear usuario
+      operationId: crearUsuario
+      x-hela-cu:
+      - CU-02
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioCrear'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/usuarios/{usuarioId}:
+    patch:
+      tags:
+      - Usuarios y permisos
+      summary: Actualizar usuario
+      operationId: actualizarUsuario
+      x-hela-cu:
+      - CU-02
+      parameters:
+      - name: usuarioId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioActualizar'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/roles:
+    get:
+      tags:
+      - Usuarios y permisos
+      summary: Listar roles
+      operationId: listarRoles
+      x-hela-cu:
+      - CU-02
+      responses:
+        '200':
+          description: Operación exitosa
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      tags:
+      - Usuarios y permisos
+      summary: Crear rol
+      operationId: crearRol
+      x-hela-cu:
+      - CU-02
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RolCrear'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rol'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/roles/{rolId}/permisos:
+    put:
+      tags:
+      - Usuarios y permisos
+      summary: Reemplazar permisos de un rol
+      operationId: actualizarPermisosRol
+      x-hela-cu:
+      - CU-02
+      parameters:
+      - name: rolId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PermisosRolActualizar'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rol'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/v1/restaurante:
+    get:
+      tags:
+      - Restaurante y sucursales
+      summary: Consultar restaurante del contexto
+      operationId: consultarRestaurante
+      x-hela-cu:
+      - CU-03
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Restaurante'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    patch:
+      tags:
+      - Restaurante y sucursales
+      summary: Actualizar restaurante
+      operationId: actualizarRestaurante
+      x-hela-cu:
+      - CU-03
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestauranteActualizar'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Restaurante'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/v1/sucursales:
+    get:
+      tags:
+      - Restaurante y sucursales
+      summary: Listar sucursales
+      operationId: listarSucursales
+      x-hela-cu:
+      - CU-03
+      responses:
+        '200':
+          description: Operación exitosa
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      tags:
+      - Restaurante y sucursales
+      summary: Crear sucursal
+      operationId: crearSucursal
+      x-hela-cu:
+      - CU-03
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SucursalCrear'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sucursal'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/sucursales/{sucursalId}:
+    patch:
+      tags:
+      - Restaurante y sucursales
+      summary: Actualizar sucursal
+      operationId: actualizarSucursal
+      x-hela-cu:
+      - CU-03
+      parameters:
+      - name: sucursalId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SucursalActualizar'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sucursal'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/v1/categorias:
+    get:
+      tags:
+      - Catálogo
+      summary: Listar categorías
+      operationId: listarCategorias
+      x-hela-cu:
+      - CU-04
+      responses:
+        '200':
+          description: Operación exitosa
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      tags:
+      - Catálogo
+      summary: Crear categoría
+      operationId: crearCategoria
+      x-hela-cu:
+      - CU-04
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoriaGuardar'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Categoria'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/v1/categorias/{categoriaId}:
+    patch:
+      tags:
+      - Catálogo
+      summary: Actualizar categoría
+      operationId: actualizarCategoria
+      x-hela-cu:
+      - CU-04
+      parameters:
+      - name: categoriaId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoriaGuardar'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Categoria'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/v1/productos:
+    get:
+      tags:
+      - Catálogo
+      summary: Listar productos
+      operationId: listarProductos
+      x-hela-cu:
+      - CU-04
+      parameters:
+      - name: categoriaId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: disponible
+        in: query
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Operación exitosa
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      tags:
+      - Catálogo
+      summary: Crear producto
+      operationId: crearProducto
+      x-hela-cu:
+      - CU-04
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductoGuardar'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Producto'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/v1/productos/{productoId}:
+    get:
+      tags:
+      - Catálogo
+      summary: Consultar producto
+      operationId: consultarProducto
+      x-hela-cu:
+      - CU-04
+      parameters:
+      - name: productoId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Producto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags:
+      - Catálogo
+      summary: Actualizar producto
+      operationId: actualizarProducto
+      x-hela-cu:
+      - CU-04
+      parameters:
+      - name: productoId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductoGuardar'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Producto'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/v1/publico/carta/{codigoQr}:
+    get:
+      tags:
+      - Carta QR pública
+      summary: Consultar carta QR pública
+      operationId: consultarCartaPublica
+      x-hela-cu:
+      - CU-05
+      parameters:
+      - name: codigoQr
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartaPublica'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      security: []
+  /api/v1/publico/carta/{codigoQr}/productos/{productoId}:
+    get:
+      tags:
+      - Carta QR pública
+      summary: Consultar detalle público de producto
+      operationId: consultarProductoPublico
+      x-hela-cu:
+      - CU-05
+      parameters:
+      - name: codigoQr
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: productoId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Producto'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      security: []
+  /api/v1/publico/carta/{codigoQr}/pedidos-temporales:
+    post:
+      tags:
+      - Carta QR pública
+      summary: Generar pedido temporal QR
+      operationId: crearPedidoTemporal
+      x-hela-cu:
+      - CU-06
+      parameters:
+      - name: codigoQr
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PedidoTemporalCrear'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoTemporal'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+      security: []
+  /api/v1/pedidos-temporales/{referencia}:
+    get:
+      tags:
+      - Pedidos
+      summary: Recuperar pedido temporal
+      operationId: recuperarPedidoTemporal
+      x-hela-cu:
+      - CU-08
+      parameters:
+      - name: referencia
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoTemporal'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/pedidos-temporales/{referencia}/validacion:
+    post:
+      tags:
+      - Pedidos
+      summary: Validar o rechazar pedido temporal
+      operationId: validarPedidoTemporal
+      x-hela-cu:
+      - CU-08
+      description: Al confirmar una selección válida se crea un pedido oficial y el temporal queda convertido. Al rechazar
+        se conserva el temporal con estado RECHAZADO.
+      parameters:
+      - name: referencia
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidarPedidoTemporal'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+  /api/v1/mesas:
+    get:
+      tags:
+      - Mesas y atención
+      summary: Consultar mesas y estado
+      operationId: listarMesas
+      x-hela-cu:
+      - CU-07
+      responses:
+        '200':
+          description: Operación exitosa
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/v1/mesas/{mesaId}/atenciones:
+    post:
+      tags:
+      - Mesas y atención
+      summary: Iniciar atención de mesa
+      operationId: iniciarAtencion
+      x-hela-cu:
+      - CU-07
+      parameters:
+      - name: mesaId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtencionCrear'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Atencion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/atenciones/{atencionId}:
+    get:
+      tags:
+      - Mesas y atención
+      summary: Consultar atención y consumo
+      operationId: consultarAtencion
+      x-hela-cu:
+      - CU-07
+      - CU-15
+      parameters:
+      - name: atencionId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Atencion'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/v1/atenciones/{atencionId}/cierre:
+    post:
+      tags:
+      - Mesas y atención
+      summary: Cerrar y liberar atención
+      operationId: cerrarAtencion
+      x-hela-cu:
+      - CU-07
+      - CU-16
+      description: Solo procede cuando el saldo pendiente es cero y no existen relaciones incompatibles.
+      parameters:
+      - name: atencionId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CerrarAtencion'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Atencion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/atenciones/agrupar:
+    post:
+      tags:
+      - Mesas y atención
+      summary: Agrupar mesas
+      operationId: agruparMesas
+      x-hela-cu:
+      - CU-13
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgruparMesas'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Atencion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/atenciones/{atencionId}/separar-mesa:
+    post:
+      tags:
+      - Mesas y atención
+      summary: Separar mesa de una atención agrupada
+      operationId: separarMesa
+      x-hela-cu:
+      - CU-13
+      parameters:
+      - name: atencionId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SepararMesa'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Atencion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/pedidos:
+    post:
+      tags:
+      - Pedidos
+      summary: Registrar pedido manual oficial
+      operationId: crearPedidoOficial
+      x-hela-cu:
+      - CU-09
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PedidoCrear'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+  /api/v1/pedidos/{pedidoId}:
+    get:
+      tags:
+      - Pedidos
+      summary: Consultar pedido oficial
+      operationId: consultarPedido
+      x-hela-cu:
+      - CU-10
+      parameters:
+      - name: pedidoId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags:
+      - Pedidos
+      summary: Actualizar datos permitidos del pedido
+      operationId: actualizarPedido
+      x-hela-cu:
+      - CU-10
+      parameters:
+      - name: pedidoId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PedidoActualizar'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/pedidos/{pedidoId}/items:
+    post:
+      tags:
+      - Pedidos
+      summary: Agregar producto a pedido oficial
+      operationId: agregarItemPedido
+      x-hela-cu:
+      - CU-10
+      parameters:
+      - name: pedidoId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemPedidoRequest'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+  /api/v1/pedidos/{pedidoId}/items/{itemId}:
+    patch:
+      tags:
+      - Pedidos
+      summary: Modificar producto del pedido
+      operationId: actualizarItemPedido
+      x-hela-cu:
+      - CU-10
+      parameters:
+      - name: pedidoId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: itemId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemPedidoActualizar'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+  /api/v1/pedidos/{pedidoId}/traslados:
+    post:
+      tags:
+      - Pedidos
+      summary: Trasladar productos entre atenciones/pedidos
+      operationId: trasladarItems
+      x-hela-cu:
+      - CU-12
+      parameters:
+      - name: pedidoId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrasladoItems'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/pedidos/{pedidoId}/descuentos:
+    post:
+      tags:
+      - Pedidos
+      summary: Aplicar descuento autorizado
+      operationId: aplicarDescuento
+      x-hela-cu:
+      - CU-17
+      parameters:
+      - name: pedidoId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescuentoAplicar'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/pedidos/{pedidoId}/anulaciones:
+    post:
+      tags:
+      - Pedidos
+      summary: Anular pedido o producto
+      operationId: anularPedidoOItem
+      x-hela-cu:
+      - CU-29
+      description: La anulación es lógica, registra motivo y responsable, recalcula total/saldo y preserva historial.
+      parameters:
+      - name: pedidoId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnularPedido'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/pedidos/{pedidoId}/comandas:
+    post:
+      tags:
+      - Comandas
+      summary: Generar comandas desde pedido oficial
+      operationId: generarComandas
+      x-hela-cu:
+      - CU-11
+      parameters:
+      - name: pedidoId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerarComandas'
+      responses:
+        '201':
+          description: Operación exitosa
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+    get:
+      tags:
+      - Comandas
+      summary: Consultar comandas del pedido
+      operationId: listarComandasPedido
+      x-hela-cu:
+      - CU-11
+      parameters:
+      - name: pedidoId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Operación exitosa
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/v1/comandas/{comandaId}/reimpresiones:
+    post:
+      tags:
+      - Comandas
+      - Impresión
+      summary: Solicitar reimpresión de comanda
+      operationId: reimprimirComanda
+      x-hela-cu:
+      - CU-22
+      parameters:
+      - name: comandaId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReimpresionRequest'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrabajoImpresion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/caja/sesion-actual:
+    get:
+      tags:
+      - Caja
+      summary: Consultar sesión de caja actual
+      operationId: consultarCajaActual
+      x-hela-cu:
+      - CU-14
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CajaSesion'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/v1/caja/sesiones:
+    post:
+      tags:
+      - Caja
+      summary: Abrir sesión de caja
+      operationId: abrirCaja
+      x-hela-cu:
+      - CU-14
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AbrirCaja'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CajaSesion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/caja/sesiones/{sesionCajaId}/movimientos:
+    post:
+      tags:
+      - Caja
+      summary: Registrar movimiento de caja
+      operationId: registrarMovimientoCaja
+      x-hela-cu:
+      - CU-14
+      parameters:
+      - name: sesionCajaId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovimientoCajaCrear'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CajaSesion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/caja/sesiones/{sesionCajaId}/cierre:
+    post:
+      tags:
+      - Caja
+      summary: Cerrar sesión de caja
+      operationId: cerrarCaja
+      x-hela-cu:
+      - CU-14
+      description: La diferencia entre monto esperado y real se conserva aun cuando sea distinta de cero.
+      parameters:
+      - name: sesionCajaId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CerrarCaja'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CajaSesion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/atenciones/{atencionId}/precuentas:
+    post:
+      tags:
+      - Pagos
+      summary: Generar precuenta
+      operationId: generarPrecuenta
+      x-hela-cu:
+      - CU-15
+      parameters:
+      - name: atencionId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Precuenta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/precuentas/{precuentaId}/impresiones:
+    post:
+      tags:
+      - Impresión
+      summary: Imprimir o reimprimir precuenta
+      operationId: imprimirPrecuenta
+      x-hela-cu:
+      - CU-15
+      - CU-22
+      parameters:
+      - name: precuentaId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReimpresionRequest'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrabajoImpresion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/atenciones/{atencionId}/pagos:
+    post:
+      tags:
+      - Pagos
+      summary: Registrar pago parcial, total o mixto
+      operationId: registrarPago
+      x-hela-cu:
+      - CU-16
+      parameters:
+      - name: atencionId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PagoCrear'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pago'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+    get:
+      tags:
+      - Pagos
+      summary: Consultar pagos de una atención
+      operationId: listarPagosAtencion
+      x-hela-cu:
+      - CU-16
+      parameters:
+      - name: atencionId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Operación exitosa
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/v1/pagos/{pagoId}/anulaciones:
+    post:
+      tags:
+      - Pagos
+      summary: Anular pago
+      operationId: anularPago
+      x-hela-cu:
+      - CU-18
+      parameters:
+      - name: pagoId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnulacionPago'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pago'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/atenciones/{atencionId}/notas-venta:
+    post:
+      tags:
+      - Documentos
+      summary: Emitir nota de venta interna
+      operationId: emitirNotaVenta
+      x-hela-cu:
+      - CU-19
+      parameters:
+      - name: atencionId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotaVentaCrear'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documento'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/atenciones/{atencionId}/comprobantes-electronicos:
+    post:
+      tags:
+      - Documentos
+      summary: Emitir boleta o factura electrónica
+      operationId: emitirComprobanteElectronico
+      x-hela-cu:
+      - CU-20
+      description: La operación interna se conserva si el proveedor externo queda pendiente, rechaza o falla.
+      parameters:
+      - name: atencionId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComprobanteElectronicoCrear'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documento'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '502':
+          $ref: '#/components/responses/ExternalDependency'
+  /api/v1/documentos/{documentoId}:
+    get:
+      tags:
+      - Documentos
+      summary: Consultar documento y estado
+      operationId: consultarDocumento
+      x-hela-cu:
+      - CU-19
+      - CU-20
+      parameters:
+      - name: documentoId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documento'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/v1/documentos/{documentoId}/anulaciones:
+    post:
+      tags:
+      - Documentos
+      summary: Anular documento
+      operationId: anularDocumento
+      x-hela-cu:
+      - CU-21
+      parameters:
+      - name: documentoId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnularDocumento'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documento'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '502':
+          $ref: '#/components/responses/ExternalDependency'
+  /api/v1/documentos/{documentoId}/reimpresiones:
+    post:
+      tags:
+      - Documentos
+      - Impresión
+      summary: Reimprimir documento existente
+      operationId: reimprimirDocumento
+      x-hela-cu:
+      - CU-22
+      parameters:
+      - name: documentoId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReimpresionRequest'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrabajoImpresion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/inventario/items:
+    get:
+      tags:
+      - Inventario
+      summary: Consultar inventario por sucursal
+      operationId: listarInventario
+      x-hela-cu:
+      - CU-23
+      parameters:
+      - name: bajoMinimo
+        in: query
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Operación exitosa
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/v1/inventario/items/{itemId}:
+    patch:
+      tags:
+      - Inventario
+      summary: Actualizar parámetros del ítem de inventario
+      operationId: actualizarInventarioItem
+      x-hela-cu:
+      - CU-23
+      parameters:
+      - name: itemId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventarioItemActualizar'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventarioItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/v1/inventario/movimientos:
+    post:
+      tags:
+      - Inventario
+      summary: Registrar movimiento o ajuste de inventario
+      operationId: registrarMovimientoInventario
+      x-hela-cu:
+      - CU-23
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovimientoInventarioCrear'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovimientoInventario'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/proveedores:
+    get:
+      tags:
+      - Compras y proveedores
+      summary: Listar proveedores
+      operationId: listarProveedores
+      x-hela-cu:
+      - CU-24
+      responses:
+        '200':
+          description: Operación exitosa
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      tags:
+      - Compras y proveedores
+      summary: Registrar proveedor
+      operationId: crearProveedor
+      x-hela-cu:
+      - CU-24
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProveedorGuardar'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proveedor'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/v1/proveedores/{proveedorId}:
+    patch:
+      tags:
+      - Compras y proveedores
+      summary: Actualizar proveedor
+      operationId: actualizarProveedor
+      x-hela-cu:
+      - CU-24
+      parameters:
+      - name: proveedorId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProveedorGuardar'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proveedor'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/v1/compras:
+    get:
+      tags:
+      - Compras y proveedores
+      summary: Consultar compras
+      operationId: listarCompras
+      x-hela-cu:
+      - CU-24
+      parameters:
+      - name: desde
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: hasta
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: proveedorId
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Operación exitosa
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      tags:
+      - Compras y proveedores
+      summary: Registrar compra
+      operationId: registrarCompra
+      x-hela-cu:
+      - CU-24
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompraCrear'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Compra'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/compras/{compraId}/anulaciones:
+    post:
+      tags:
+      - Compras y proveedores
+      summary: Anular compra y corregir inventario
+      operationId: anularCompra
+      x-hela-cu:
+      - CU-24
+      parameters:
+      - name: compraId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnularCompra'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Compra'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/reportes:
+    get:
+      tags:
+      - Reportes
+      summary: Consultar reporte consolidado
+      operationId: consultarReporte
+      x-hela-cu:
+      - CU-25
+      parameters:
+      - name: tipo
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - VENTAS
+          - PAGOS
+          - CAJA
+          - PRODUCTOS
+          - INVENTARIO
+      - name: desde
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: hasta
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: sucursalId
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReporteResultado'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/v1/auditoria:
+    get:
+      tags:
+      - Auditoría
+      summary: Consultar auditoría
+      operationId: consultarAuditoria
+      x-hela-cu:
+      - CU-26
+      parameters:
+      - name: desde
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: hasta
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: usuarioId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: accion
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: pagina
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: tamano
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListaAuditoria'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/v1/configuracion:
+    get:
+      tags:
+      - Configuración
+      summary: Consultar configuración operativa
+      operationId: consultarConfiguracion
+      x-hela-cu:
+      - CU-27
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Configuracion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    patch:
+      tags:
+      - Configuración
+      summary: Actualizar configuración operativa
+      operationId: actualizarConfiguracion
+      x-hela-cu:
+      - CU-27
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfiguracionActualizar'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Configuracion'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/saas/restaurantes:
+    get:
+      tags:
+      - Administración SaaS
+      summary: Listar restaurantes clientes
+      operationId: listarRestaurantesSaaS
+      x-hela-cu:
+      - CU-28
+      parameters:
+      - name: estado
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - ACTIVO
+          - SUSPENDIDO
+          - CONFIGURACION
+      - name: pagina
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: tamano
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListaRestaurantes'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      tags:
+      - Administración SaaS
+      summary: Registrar restaurante cliente
+      operationId: crearRestauranteSaaS
+      x-hela-cu:
+      - CU-28
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestauranteSaaSCrear'
+      responses:
+        '201':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Restaurante'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/saas/restaurantes/{restauranteId}:
+    get:
+      tags:
+      - Administración SaaS
+      summary: Consultar restaurante cliente
+      operationId: consultarRestauranteSaaS
+      x-hela-cu:
+      - CU-28
+      parameters:
+      - name: restauranteId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Restaurante'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags:
+      - Administración SaaS
+      summary: Actualizar estado o datos SaaS
+      operationId: actualizarRestauranteSaaS
+      x-hela-cu:
+      - CU-28
+      parameters:
+      - name: restauranteId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestauranteSaaSActualizar'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Restaurante'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/saas/restaurantes/{restauranteId}/modulos:
+    put:
+      tags:
+      - Administración SaaS
+      summary: Definir módulos habilitados
+      operationId: actualizarModulosSaaS
+      x-hela-cu:
+      - CU-28
+      parameters:
+      - name: restauranteId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModulosSaaSActualizar'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Restaurante'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/impresion/trabajos/{trabajoId}:
+    get:
+      tags:
+      - Impresión
+      summary: Consultar estado de trabajo de impresión
+      operationId: consultarTrabajoImpresion
+      x-hela-cu:
+      - CU-11
+      - CU-15
+      - CU-20
+      - CU-22
+      parameters:
+      - name: trabajoId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrabajoImpresion'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    BadRequest:
+      description: Solicitud inválida.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Autenticación ausente o inválida.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: El usuario no posee permiso, módulo o alcance suficiente.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Recurso no encontrado dentro del alcance autorizado.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflicto de estado o regla de negocio.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unprocessable:
+      description: Datos válidos sintácticamente pero no procesables.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ExternalDependency:
+      description: Dependencia externa no disponible o con respuesta inválida.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      required:
+      - codigo
+      - mensaje
+      properties:
+        codigo:
+          type: string
+          example: REGLA_NEGOCIO_INVALIDA
+        mensaje:
+          type: string
+          example: La operación no puede completarse en el estado actual.
+        detalles:
+          type: array
+          items:
+            type: string
+        traceId:
+          type: string
+    IdNombre:
+      type: object
+      required:
+      - id
+      - nombre
+      properties:
+        id:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+    PaginaMeta:
+      type: object
+      properties:
+        pagina:
+          type: integer
+          minimum: 1
+        tamano:
+          type: integer
+          minimum: 1
+        total:
+          type: integer
+          minimum: 0
+    UsuarioSesion:
+      type: object
+      required:
+      - usuarioId
+      - restauranteId
+      - sucursalId
+      - roles
+      - permisos
+      - modulos
+      properties:
+        usuarioId:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+        restauranteId:
+          type: string
+          format: uuid
+        sucursalId:
+          type: string
+          format: uuid
+        roles:
+          type: array
+          items:
+            type: string
+        permisos:
+          type: array
+          items:
+            type: string
+        modulos:
+          type: array
+          items:
+            type: string
+    LoginRequest:
+      type: object
+      required:
+      - usuario
+      - contrasena
+      properties:
+        usuario:
+          type: string
+        contrasena:
+          type: string
+          format: password
+    LoginResponse:
+      type: object
+      required:
+      - accessToken
+      - refreshToken
+      - sesion
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        expiresIn:
+          type: integer
+        sesion:
+          $ref: '#/components/schemas/UsuarioSesion'
+    RefreshRequest:
+      type: object
+      required:
+      - refreshToken
+      properties:
+        refreshToken:
+          type: string
+    Usuario:
+      type: object
+      required:
+      - id
+      - nombre
+      - activo
+      properties:
+        id:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+        email:
+          type: string
+          format: email
+        activo:
+          type: boolean
+        roles:
+          type: array
+          items:
+            type: string
+        sucursalIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    UsuarioCrear:
+      type: object
+      required:
+      - nombre
+      - email
+      - rolIds
+      properties:
+        nombre:
+          type: string
+        email:
+          type: string
+          format: email
+        contrasenaTemporal:
+          type: string
+          minLength: 8
+        rolIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        sucursalIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    UsuarioActualizar:
+      type: object
+      properties:
+        nombre:
+          type: string
+        activo:
+          type: boolean
+        rolIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        sucursalIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    ListaUsuarios:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Usuario'
+        meta:
+          $ref: '#/components/schemas/PaginaMeta'
+    Rol:
+      type: object
+      required:
+      - id
+      - nombre
+      properties:
+        id:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+        permisos:
+          type: array
+          items:
+            type: string
+    RolCrear:
+      type: object
+      required:
+      - nombre
+      properties:
+        nombre:
+          type: string
+        descripcion:
+          type: string
+    PermisosRolActualizar:
+      type: object
+      required:
+      - permisos
+      properties:
+        permisos:
+          type: array
+          items:
+            type: string
+    Restaurante:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+        estado:
+          type: string
+          enum:
+          - ACTIVO
+          - SUSPENDIDO
+          - CONFIGURACION
+        ruc:
+          type: string
+        modulos:
+          type: array
+          items:
+            type: string
+    RestauranteActualizar:
+      type: object
+      properties:
+        nombre:
+          type: string
+        ruc:
+          type: string
+        logoUrl:
+          type: string
+          format: uri
+    Sucursal:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+        direccion:
+          type: string
+        activa:
+          type: boolean
+    SucursalCrear:
+      type: object
+      required:
+      - nombre
+      properties:
+        nombre:
+          type: string
+        direccion:
+          type: string
+    SucursalActualizar:
+      type: object
+      properties:
+        nombre:
+          type: string
+        direccion:
+          type: string
+        activa:
+          type: boolean
+    Categoria:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+        visible:
+          type: boolean
+        orden:
+          type: integer
+    CategoriaGuardar:
+      type: object
+      required:
+      - nombre
+      properties:
+        nombre:
+          type: string
+        visible:
+          type: boolean
+        orden:
+          type: integer
+    Producto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        categoriaId:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+        descripcion:
+          type: string
+        precio:
+          type: number
+          format: double
+          minimum: 0
+        imagenUrl:
+          type: string
+          format: uri
+        disponible:
+          type: boolean
+        visibleQr:
+          type: boolean
+        destinoPreparacion:
+          type: string
+          enum:
+          - COCINA
+          - BAR
+          - AMBOS
+          - NINGUNO
+    ProductoGuardar:
+      type: object
+      required:
+      - categoriaId
+      - nombre
+      - precio
+      - destinoPreparacion
+      properties:
+        categoriaId:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+        descripcion:
+          type: string
+        precio:
+          type: number
+          format: double
+          minimum: 0
+        imagenUrl:
+          type: string
+          format: uri
+        disponible:
+          type: boolean
+        visibleQr:
+          type: boolean
+        destinoPreparacion:
+          type: string
+          enum:
+          - COCINA
+          - BAR
+          - AMBOS
+          - NINGUNO
+    CartaPublica:
+      type: object
+      required:
+      - restaurante
+      - sucursal
+      - categorias
+      properties:
+        restaurante:
+          $ref: '#/components/schemas/IdNombre'
+        sucursal:
+          $ref: '#/components/schemas/IdNombre'
+        mesaId:
+          type: string
+          format: uuid
+          nullable: true
+        categorias:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+              nombre:
+                type: string
+              productos:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Producto'
+    OpcionSeleccionada:
+      type: object
+      properties:
+        nombre:
+          type: string
+        valor:
+          type: string
+    ItemPedidoRequest:
+      type: object
+      required:
+      - productoId
+      - cantidad
+      properties:
+        productoId:
+          type: string
+          format: uuid
+        cantidad:
+          type: integer
+          minimum: 1
+        observacion:
+          type: string
+          maxLength: 500
+        opciones:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpcionSeleccionada'
+    PedidoTemporalCrear:
+      type: object
+      required:
+      - items
+      properties:
+        mesaId:
+          type: string
+          format: uuid
+          nullable: true
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ItemPedidoRequest'
+        observacion:
+          type: string
+          maxLength: 500
+    PedidoTemporal:
+      type: object
+      required:
+      - referencia
+      - estado
+      - venceEn
+      - items
+      properties:
+        referencia:
+          type: string
+        estado:
+          type: string
+          enum:
+          - PENDIENTE
+          - CONVERTIDO
+          - RECHAZADO
+          - EXPIRADO
+        venceEn:
+          type: string
+          format: date-time
+        mesaId:
+          type: string
+          format: uuid
+          nullable: true
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemPedidoRequest'
+    ValidarPedidoTemporal:
+      type: object
+      required:
+      - accion
+      properties:
+        accion:
+          type: string
+          enum:
+          - CONFIRMAR
+          - RECHAZAR
+        motivo:
+          type: string
+          maxLength: 500
+    PedidoItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        productoId:
+          type: string
+          format: uuid
+        nombreProducto:
+          type: string
+        cantidad:
+          type: integer
+        precioUnitario:
+          type: number
+          format: double
+        subtotal:
+          type: number
+          format: double
+        estado:
+          type: string
+          enum:
+          - ACTIVO
+          - ANULADO
+        observacion:
+          type: string
+    Pedido:
+      type: object
+      required:
+      - id
+      - estado
+      - items
+      - total
+      - saldo
+      properties:
+        id:
+          type: string
+          format: uuid
+        atencionId:
+          type: string
+          format: uuid
+          nullable: true
+        estado:
+          type: string
+          enum:
+          - ABIERTO
+          - CERRADO
+          - ANULADO
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PedidoItem'
+        subtotal:
+          type: number
+          format: double
+        descuento:
+          type: number
+          format: double
+        total:
+          type: number
+          format: double
+        saldo:
+          type: number
+          format: double
+    PedidoCrear:
+      type: object
+      required:
+      - items
+      properties:
+        mesaId:
+          type: string
+          format: uuid
+          nullable: true
+        atencionId:
+          type: string
+          format: uuid
+          nullable: true
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ItemPedidoRequest'
+        observacion:
+          type: string
+    PedidoActualizar:
+      type: object
+      properties:
+        observacion:
+          type: string
+    ItemPedidoActualizar:
+      type: object
+      properties:
+        cantidad:
+          type: integer
+          minimum: 1
+        observacion:
+          type: string
+        opciones:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpcionSeleccionada'
+    AnularPedido:
+      type: object
+      required:
+      - motivo
+      properties:
+        itemId:
+          type: string
+          format: uuid
+          nullable: true
+          description: Si se omite, se solicita anulación del pedido completo.
+        motivo:
+          type: string
+          minLength: 3
+    DescuentoAplicar:
+      type: object
+      required:
+      - tipo
+      - valor
+      - motivo
+      properties:
+        itemId:
+          type: string
+          format: uuid
+          nullable: true
+        tipo:
+          type: string
+          enum:
+          - PORCENTAJE
+          - MONTO
+        valor:
+          type: number
+          minimum: 0
+        motivo:
+          type: string
+    TrasladoItems:
+      type: object
+      required:
+      - destinoAtencionId
+      - itemIds
+      properties:
+        destinoAtencionId:
+          type: string
+          format: uuid
+        itemIds:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            format: uuid
+    Mesa:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        numero:
+          type: string
+        zona:
+          type: string
+        estado:
+          type: string
+          enum:
+          - LIBRE
+          - OCUPADA
+          - AGRUPADA
+          - INACTIVA
+        atencionId:
+          type: string
+          format: uuid
+          nullable: true
+    AtencionCrear:
+      type: object
+      properties:
+        personas:
+          type: integer
+          minimum: 1
+        observacion:
+          type: string
+    Atencion:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        mesaIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        estado:
+          type: string
+          enum:
+          - ABIERTA
+          - CERRADA
+          - CANCELADA
+        pedidoIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        total:
+          type: number
+        saldo:
+          type: number
+    CerrarAtencion:
+      type: object
+      properties:
+        observacion:
+          type: string
+    AgruparMesas:
+      type: object
+      required:
+      - mesaIds
+      properties:
+        mesaIds:
+          type: array
+          minItems: 2
+          items:
+            type: string
+            format: uuid
+    SepararMesa:
+      type: object
+      required:
+      - mesaId
+      properties:
+        mesaId:
+          type: string
+          format: uuid
+    Comanda:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        pedidoId:
+          type: string
+          format: uuid
+        destino:
+          type: string
+          enum:
+          - COCINA
+          - BAR
+        estadoImpresion:
+          type: string
+          enum:
+          - PENDIENTE
+          - PROCESANDO
+          - IMPRESA
+          - ERROR
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PedidoItem'
+    GenerarComandas:
+      type: object
+      properties:
+        motivo:
+          type: string
+          enum:
+          - CONFIRMACION_PEDIDO
+          - MODIFICACION
+    TrabajoImpresion:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        tipo:
+          type: string
+          enum:
+          - COMANDA
+          - PRECUENTA
+          - DOCUMENTO
+        estado:
+          type: string
+          enum:
+          - PENDIENTE
+          - PROCESANDO
+          - IMPRESO
+          - ERROR
+        intentos:
+          type: integer
+        error:
+          type: string
+          nullable: true
+    ReimpresionRequest:
+      type: object
+      properties:
+        motivo:
+          type: string
+    CajaSesion:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        estado:
+          type: string
+          enum:
+          - ABIERTA
+          - CERRADA
+        montoInicial:
+          type: number
+        montoEsperado:
+          type: number
+        montoReal:
+          type: number
+          nullable: true
+        diferencia:
+          type: number
+          nullable: true
+        abiertaEn:
+          type: string
+          format: date-time
+        cerradaEn:
+          type: string
+          format: date-time
+          nullable: true
+    AbrirCaja:
+      type: object
+      required:
+      - montoInicial
+      properties:
+        montoInicial:
+          type: number
+          minimum: 0
+        observacion:
+          type: string
+    MovimientoCajaCrear:
+      type: object
+      required:
+      - tipo
+      - monto
+      - motivo
+      properties:
+        tipo:
+          type: string
+          enum:
+          - ENTRADA
+          - SALIDA
+        monto:
+          type: number
+          exclusiveMinimum: 0
+        motivo:
+          type: string
+    CerrarCaja:
+      type: object
+      required:
+      - montoReal
+      properties:
+        montoReal:
+          type: number
+          minimum: 0
+        observacion:
+          type: string
+    PagoAplicacion:
+      type: object
+      required:
+      - metodoPagoId
+      - monto
+      properties:
+        metodoPagoId:
+          type: string
+          format: uuid
+        monto:
+          type: number
+          exclusiveMinimum: 0
+        referencia:
+          type: string
+    PagoCrear:
+      type: object
+      required:
+      - aplicaciones
+      properties:
+        aplicaciones:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/PagoAplicacion'
+        observacion:
+          type: string
+    Pago:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        atencionId:
+          type: string
+          format: uuid
+        estado:
+          type: string
+          enum:
+          - VALIDO
+          - ANULADO
+        monto:
+          type: number
+        aplicaciones:
+          type: array
+          items:
+            $ref: '#/components/schemas/PagoAplicacion'
+        saldoPosterior:
+          type: number
+    AnulacionPago:
+      type: object
+      required:
+      - motivo
+      properties:
+        motivo:
+          type: string
+    Precuenta:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        atencionId:
+          type: string
+          format: uuid
+        total:
+          type: number
+        pagado:
+          type: number
+        saldo:
+          type: number
+        generadaEn:
+          type: string
+          format: date-time
+    NotaVentaCrear:
+      type: object
+      properties:
+        imprimir:
+          type: boolean
+          default: false
+    ComprobanteElectronicoCrear:
+      type: object
+      required:
+      - tipo
+      properties:
+        tipo:
+          type: string
+          enum:
+          - BOLETA
+          - FACTURA
+        cliente:
+          type: object
+          properties:
+            tipoDocumento:
+              type: string
+            numeroDocumento:
+              type: string
+            nombreRazonSocial:
+              type: string
+            direccion:
+              type: string
+        imprimir:
+          type: boolean
+          default: false
+    Documento:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        tipo:
+          type: string
+          enum:
+          - NOTA_VENTA
+          - BOLETA
+          - FACTURA
+        estado:
+          type: string
+          enum:
+          - REGISTRADO
+          - PENDIENTE
+          - EMITIDO
+          - RECHAZADO
+          - ERROR
+          - ANULADO
+        serie:
+          type: string
+          nullable: true
+        numero:
+          type: string
+          nullable: true
+        identificadorExterno:
+          type: string
+          nullable: true
+        total:
+          type: number
+    AnularDocumento:
+      type: object
+      required:
+      - motivo
+      properties:
+        motivo:
+          type: string
+    InventarioItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+        unidad:
+          type: string
+        stock:
+          type: number
+        stockMinimo:
+          type: number
+    InventarioItemActualizar:
+      type: object
+      properties:
+        stockMinimo:
+          type: number
+          minimum: 0
+        activo:
+          type: boolean
+    MovimientoInventarioCrear:
+      type: object
+      required:
+      - itemId
+      - tipo
+      - cantidad
+      - motivo
+      properties:
+        itemId:
+          type: string
+          format: uuid
+        tipo:
+          type: string
+          enum:
+          - ENTRADA
+          - SALIDA
+          - AJUSTE_POSITIVO
+          - AJUSTE_NEGATIVO
+        cantidad:
+          type: number
+          exclusiveMinimum: 0
+        motivo:
+          type: string
+    MovimientoInventario:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        itemId:
+          type: string
+          format: uuid
+        tipo:
+          type: string
+        cantidad:
+          type: number
+        stockPosterior:
+          type: number
+        fecha:
+          type: string
+          format: date-time
+    Proveedor:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+        ruc:
+          type: string
+        activo:
+          type: boolean
+        contacto:
+          type: string
+    ProveedorGuardar:
+      type: object
+      required:
+      - nombre
+      properties:
+        nombre:
+          type: string
+        ruc:
+          type: string
+        contacto:
+          type: string
+        activo:
+          type: boolean
+    CompraItem:
+      type: object
+      required:
+      - inventarioItemId
+      - cantidad
+      - costoUnitario
+      properties:
+        inventarioItemId:
+          type: string
+          format: uuid
+        cantidad:
+          type: number
+          exclusiveMinimum: 0
+        costoUnitario:
+          type: number
+          minimum: 0
+    CompraCrear:
+      type: object
+      required:
+      - proveedorId
+      - items
+      properties:
+        proveedorId:
+          type: string
+          format: uuid
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/CompraItem'
+        observacion:
+          type: string
+    Compra:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        proveedorId:
+          type: string
+          format: uuid
+        estado:
+          type: string
+          enum:
+          - REGISTRADA
+          - ANULADA
+        total:
+          type: number
+        fecha:
+          type: string
+          format: date-time
+    AnularCompra:
+      type: object
+      required:
+      - motivo
+      properties:
+        motivo:
+          type: string
+    ReporteResultado:
+      type: object
+      properties:
+        tipo:
+          type: string
+        desde:
+          type: string
+          format: date
+        hasta:
+          type: string
+          format: date
+        filas:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    RegistroAuditoria:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        fecha:
+          type: string
+          format: date-time
+        usuarioId:
+          type: string
+          format: uuid
+        accion:
+          type: string
+        contexto:
+          type: string
+        resultado:
+          type: string
+    ListaAuditoria:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegistroAuditoria'
+        meta:
+          $ref: '#/components/schemas/PaginaMeta'
+    Configuracion:
+      type: object
+      properties:
+        pagos:
+          type: object
+          additionalProperties: true
+        impresion:
+          type: object
+          additionalProperties: true
+        caja:
+          type: object
+          additionalProperties: true
+        documentos:
+          type: object
+          additionalProperties: true
+        cartaQr:
+          type: object
+          additionalProperties: true
+    ConfiguracionActualizar:
+      type: object
+      additionalProperties: true
+    RestauranteSaaSCrear:
+      type: object
+      required:
+      - nombre
+      properties:
+        nombre:
+          type: string
+        ruc:
+          type: string
+        modulos:
+          type: array
+          items:
+            type: string
+    RestauranteSaaSActualizar:
+      type: object
+      properties:
+        nombre:
+          type: string
+        estado:
+          type: string
+          enum:
+          - ACTIVO
+          - SUSPENDIDO
+          - CONFIGURACION
+    ModulosSaaSActualizar:
+      type: object
+      required:
+      - modulos
+      properties:
+        modulos:
+          type: array
+          items:
+            type: string
+    ListaRestaurantes:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Restaurante'
+        meta:
+          $ref: '#/components/schemas/PaginaMeta'
