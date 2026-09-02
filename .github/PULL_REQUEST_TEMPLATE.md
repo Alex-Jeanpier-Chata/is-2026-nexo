@@ -1,16 +1,23 @@
 ## 📝 Descripción del Cambio
-[Explica brevemente qué cambiaste, agregaste o corregiste en este PR]
+[Explica brevemente el qué y el porqué de este PR. Ejemplo: "Se implementó la autenticación con JWT para proteger los endpoints de usuarios."]
 
-## 🔗 Referencia al Tablero (Issue)
-- Resuelve la tarea: #[Número de la tarjeta en GitHub Projects]
+## 🔗 Referencia
+- Relacionado con: #[Número de la tarea o Issue]
 
 ## 🏷️ Tipo de Cambio
-- [ ] 📄 `docs`: Actualización de documentación (SAD, OpenAPI, Acta, README)
-- [ ] ✨ `feat`: Nueva funcionalidad o archivo importante
-- [ ] 🐛 `fix`: Corrección de error
-- [ ] ⚙️ `chore`: Tareas de configuración del repositorio
+- [ ] 📄 `docs`: Documentación (SAD, OpenAPI, README, etc.)
+- [ ] ✨ `feat`: Nueva funcionalidad
+- [ ] 🐛 `fix`: Corrección de error (bug fix)
+- [ ] 🎨 `style`: Cambios de formato (sin alterar lógica, espacios, etc.)
+- [ ] ♻️ `refactor`: Refactorización de código
+- [ ] ⚙️ `chore`: Tareas de configuración, dependencias o mantenimiento
+
+## 🧪 Pruebas Realizadas
+- [ ] Se verificó el funcionamiento localmente.
+- [ ] Se agregaron o actualizaron pruebas unitarias/integración (si aplica).
 
 ## ✅ Checklist del Desarrollador
-- [ ] Mi código/documento respeta la estructura de carpetas exigida.
+- [ ] Mi código sigue las guías de estilo y estructura de carpetas del proyecto.
 - [ ] Los mensajes de mis commits siguen la convención `<tipo>: <descripción>`.
-- [ ] He revisado mi propio cambio antes de abrir este PR.
+- [ ] He realizado una auto-revisión de mi propio código antes de abrir este PR.
+- [ ] No incluye código comentado, logs de depuración innecesarios ni archivos basura.
