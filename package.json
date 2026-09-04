@@ -1,0 +1,29 @@
+{
+  "name": "is-2026-nexo",
+  "version": "1.0.0",
+  "description": "Equipo Nexo, Ingeniería de Software I (IS1-2026), UNJBG.",
+  "main": "src/backend/servidor.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "node --test",
+    "start": "node src/backend/servidor.js",
+    "dev": "node --watch src/backend/servidor.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alex-Jeanpier-Chata/is-2026-nexo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues"
+  },
+  "homepage": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
