@@ -1,0 +1,176 @@
+{
+  "repositorio": "Alex-Jeanpier-Chata/is-2026-nexo",
+  "fechaExtraccion": "2026-09-15T23:38:38.097Z",
+  "fuente": "GitHub API",
+  "ventana": {
+    "inicio": "2026-08-25T23:38:35.403Z",
+    "fin": "2026-09-15T23:38:35.403Z",
+    "dias": 21,
+    "semanas": 3
+  },
+  "ramas": {
+    "principal": "main",
+    "integracion": "develop"
+  },
+  "resumenExtraccion": {
+    "pullRequestsCerrados": 12,
+    "pullRequestsFusionadosEnVentana": 8
+  },
+  "metricas": {
+    "tiempoEntrega": {
+      "muestra": 8,
+      "promedioHoras": 40.8,
+      "medianaHoras": 0.7
+    },
+    "frecuenciaIntegracionPrincipal": {
+      "rama": "main",
+      "muestra": 2,
+      "semanasObservadas": 3,
+      "frecuenciaPorSemana": 0.67,
+      "pullRequests": [
+        12,
+        1
+      ]
+    },
+    "frecuenciaIntegracionInterna": {
+      "rama": "develop",
+      "muestra": 6,
+      "semanasObservadas": 3,
+      "frecuenciaPorSemana": 2,
+      "pullRequests": [
+        17,
+        14,
+        10,
+        8,
+        5,
+        3
+      ]
+    }
+  },
+  "pullRequests": [
+    {
+      "numero": 17,
+      "titulo": "docs: publica paquete de acuerdos S03",
+      "ramaOrigen": "docs/s03-acuerdos-equipo",
+      "ramaDestino": "develop",
+      "primerCommit": {
+        "sha": "93486e4bb5cc3dc149039cf8d4ed631f4279e06b",
+        "fecha": "2026-09-09T00:51:44Z"
+      },
+      "fechaIntegracion": "2026-09-15T21:01:28Z",
+      "tiempoEntregaHoras": 164.2,
+      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/17"
+    },
+    {
+      "numero": 14,
+      "titulo": "chore: plantilla para issues de especificacion y actualizacion de pla…",
+      "ramaOrigen": "chore/s03-configuracion-git",
+      "ramaDestino": "develop",
+      "primerCommit": {
+        "sha": "e13784db3e617d3478afaeb7de2a66a726e646ad",
+        "fecha": "2026-09-08T23:50:48Z"
+      },
+      "fechaIntegracion": "2026-09-09T00:01:54Z",
+      "tiempoEntregaHoras": 0.2,
+      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/14"
+    },
+    {
+      "numero": 12,
+      "titulo": "Release: S02 - Primera Rebanada Vertical y Mapeo SWEBOK",
+      "ramaOrigen": "develop",
+      "ramaDestino": "main",
+      "primerCommit": {
+        "sha": "c5dfbfba8b43abf5b62642efa84cce71fd2101c5",
+        "fecha": "2026-09-02T00:50:05Z"
+      },
+      "fechaIntegracion": "2026-09-07T20:51:55Z",
+      "tiempoEntregaHoras": 140,
+      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/12"
+    },
+    {
+      "numero": 10,
+      "titulo": "docs: actualiza documentacion de proceso y contrato vigente",
+      "ramaOrigen": "feature/s02-documentacion-equipo-9",
+      "ramaDestino": "develop",
+      "primerCommit": {
+        "sha": "6ce09d2ca6123b4934aedb1c6bb46f9f1937540f",
+        "fecha": "2026-09-04T16:25:36Z"
+      },
+      "fechaIntegracion": "2026-09-04T16:50:13Z",
+      "tiempoEntregaHoras": 0.4,
+      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/10"
+    },
+    {
+      "numero": 8,
+      "titulo": "feat: implementa primera rebanada vertical CU-06",
+      "ramaOrigen": "feat/s02-pedido-temporal-qr",
+      "ramaDestino": "develop",
+      "primerCommit": {
+        "sha": "1717f4e9ea9a36ec11923468f1c35ff90390fcf0",
+        "fecha": "2026-09-04T01:40:31Z"
+      },
+      "fechaIntegracion": "2026-09-04T02:40:26Z",
+      "tiempoEntregaHoras": 1,
+      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/8"
+    },
+    {
+      "numero": 5,
+      "titulo": "chore: Plantilla para Pull Request",
+      "ramaOrigen": "chore/s02-configuracion-git",
+      "ramaDestino": "develop",
+      "primerCommit": {
+        "sha": "7a0eca63dd6ddf711e635ca3ec985331f5aae789",
+        "fecha": "2026-09-02T21:31:28Z"
+      },
+      "fechaIntegracion": "2026-09-02T21:47:00Z",
+      "tiempoEntregaHoras": 0.3,
+      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/5"
+    },
+    {
+      "numero": 3,
+      "titulo": "docs: actualiza OpenAPI de HELA v0.2.1",
+      "ramaOrigen": "docs/s02-contrato-openapi-v021",
+      "ramaDestino": "develop",
+      "primerCommit": {
+        "sha": "c5dfbfba8b43abf5b62642efa84cce71fd2101c5",
+        "fecha": "2026-09-02T00:50:05Z"
+      },
+      "fechaIntegracion": "2026-09-02T20:51:14Z",
+      "tiempoEntregaHoras": 20,
+      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/3"
+    },
+    {
+      "numero": 1,
+      "titulo": "docs: actualiza SAD y analisis de HELA.",
+      "ramaOrigen": "docs/s02-acta-y-convenciones",
+      "ramaDestino": "main",
+      "primerCommit": {
+        "sha": "f1b2fa20386113fc3125a68d3f23fd3075e82dc8",
+        "fecha": "2026-09-02T00:00:36Z"
+      },
+      "fechaIntegracion": "2026-09-02T00:06:32Z",
+      "tiempoEntregaHoras": 0.1,
+      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/1"
+    }
+  ],
+  "indicadoresPendientes": [
+    {
+      "indicador": "Frecuencia de despliegue",
+      "estado": "Pendiente",
+      "motivo": "El proyecto aún no dispone de un proceso de despliegue a producción registrado de forma automatizada.",
+      "activacionPrevista": "Semana 16"
+    },
+    {
+      "indicador": "Tasa de fallos de cambios",
+      "estado": "Pendiente",
+      "motivo": "No existen registros de producción que permitan relacionar despliegues con fallos, degradaciones o correcciones.",
+      "activacionPrevista": "Semana 16"
+    },
+    {
+      "indicador": "Tiempo de restauración del servicio",
+      "estado": "Pendiente",
+      "motivo": "El proyecto todavía no dispone de monitoreo de producción ni registros formales de incidentes y restauraciones.",
+      "activacionPrevista": "Semana 16"
+    }
+  ]
+}
