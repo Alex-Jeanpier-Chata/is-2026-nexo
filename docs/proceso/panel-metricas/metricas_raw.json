@@ -1,10 +1,10 @@
 {
   "repositorio": "Alex-Jeanpier-Chata/is-2026-nexo",
-  "fechaExtraccion": "2026-10-20T14:58:51.514Z",
+  "fechaExtraccion": "2026-10-20T17:19:12.970Z",
   "fuente": "GitHub API",
   "ventana": {
-    "inicio": "2026-09-29T14:58:22.858Z",
-    "fin": "2026-10-20T14:58:22.858Z",
+    "inicio": "2026-09-29T17:15:00.000Z",
+    "fin": "2026-10-20T17:15:00.000Z",
     "dias": 21,
     "semanas": 3
   },
@@ -13,14 +13,14 @@
     "integracion": "develop"
   },
   "resumenExtraccion": {
-    "pullRequestsCerrados": 17,
-    "pullRequestsFusionadosEnVentana": 3
+    "pullRequestsCerrados": 21,
+    "pullRequestsFusionadosEnVentana": 5
   },
   "metricas": {
     "tiempoEntrega": {
-      "muestra": 3,
-      "promedioHoras": 52.9,
-      "medianaHoras": 0.2
+      "muestra": 5,
+      "promedioHoras": 32,
+      "medianaHoras": 0.5
     },
     "frecuenciaIntegracionPrincipal": {
       "rama": "main",
@@ -31,10 +31,12 @@
     },
     "frecuenciaIntegracionInterna": {
       "rama": "develop",
-      "muestra": 3,
+      "muestra": 5,
       "semanasObservadas": 3,
-      "frecuenciaPorSemana": 1,
+      "frecuenciaPorSemana": 1.67,
       "pullRequests": [
+        40,
+        38,
         36,
         35,
         26
@@ -42,6 +44,32 @@
     }
   },
   "pullRequests": [
+    {
+      "numero": 40,
+      "titulo": "fix: corrige validaciones OpenAPI de CU-06",
+      "ramaOrigen": "fix/dt01-validacion-cu06",
+      "ramaDestino": "develop",
+      "primerCommit": {
+        "sha": "d6c869ddfc86a03f985028bb517c9e9ce3e32565",
+        "fecha": "2026-10-20T16:39:34Z"
+      },
+      "fechaIntegracion": "2026-10-20T17:08:18Z",
+      "tiempoEntregaHoras": 0.5,
+      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/40"
+    },
+    {
+      "numero": 38,
+      "titulo": "docs(s08): preparar auditoría y consolidar evidencias del proceso",
+      "ramaOrigen": "docs/s08-expediente-proceso",
+      "ramaDestino": "develop",
+      "primerCommit": {
+        "sha": "3aec3b7f681dd927c311753ab546b5364d9e55f9",
+        "fecha": "2026-10-20T14:55:34Z"
+      },
+      "fechaIntegracion": "2026-10-20T15:34:58Z",
+      "tiempoEntregaHoras": 0.7,
+      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/38"
+    },
     {
       "numero": 36,
       "titulo": "Docs/s06   s07 publicacion de entregables",

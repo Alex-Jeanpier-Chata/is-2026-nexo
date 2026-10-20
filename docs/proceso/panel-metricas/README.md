@@ -1,102 +1,128 @@
-# Panel de métricas de proceso
 
-Este panel presenta las métricas obtenidas del historial real del repositorio de HELA mediante la API de GitHub. Conserva la medición histórica de S04 y añade la captura de cierre de S08 sin cambiar la metodología.
+# HELA — Dashboard de Métricas de Proceso
 
-## 1. Metodología
+**Equipo:** Nexo  
+**Curso:** Ingeniería de Software I  
+**Proyecto:** HELA — Sistema de gestión para restaurantes  
+**Período académico:** Semanas 01–08
 
-- Ventana de observación: 21 días, equivalentes a 3 semanas.
-- Inclusión: Pull Requests con `merged_at` dentro de la ventana.
-- Tiempo de entrega: `merged_at - fecha del primer commit del PR`.
-- Resumen del tiempo de entrega: promedio y mediana, sin excluir valores extremos.
-- Frecuencia principal: PR fusionados hacia `main` divididos entre 3 semanas.
-- Información complementaria: PR fusionados hacia `develop` divididos entre 3 semanas.
+## 1. Objetivo
 
-La integración hacia `main` no se equipara a un despliegue. Frecuencia de despliegue, tasa de fallos de cambios y tiempo de restauración permanecen pendientes mientras no exista evidencia de producción.
+Medir y analizar el comportamiento del proceso de desarrollo de HELA mediante indicadores obtenidos de GitHub.
 
-## 2. Comparación S04–S08
+El dashboard permite evaluar los tiempos de entrega de cambios, la frecuencia de integración y la evolución de las mediciones realizadas durante el curso.
+
+## 2. Metodología
+
+**Fuente:** GitHub API.
+
+**Ventana de medición:** 21 días (3 semanas).
+
+**Criterios:**
+
+- Se consideran PR fusionados dentro de la ventana.
+- El tiempo de entrega se calcula desde el primer commit del PR hasta su integración.
+- Se utilizan promedio y mediana para describir los tiempos.
+- La frecuencia se calcula dividiendo las integraciones entre las semanas observadas.
+- Se diferencian las ramas `main` y `develop`.
+- Los indicadores sin evidencia productiva no reciben valores estimados.
+
+Los datos y las marcas temporales originales se conservan en los archivos JSON del panel.
+
+## 3. Comparación de métricas S04–S08
 
 | Indicador | S04 | S08 |
 |---|---:|---:|
-| PR fusionados en la ventana | 8 | 3 |
-| Tiempo de entrega promedio | 40.8 h | 52.9 h |
-| Tiempo de entrega mediano | 0.7 h | 0.2 h |
-| Integraciones hacia `main` | 2 | 0 |
-| Frecuencia hacia `main` | 0.67/semana | 0.00/semana |
-| Integraciones hacia `develop` | 6 | 3 |
-| Frecuencia hacia `develop` | 2.00/semana | 1.00/semana |
+| PR fusionados | 8 | 5 |
+| Tiempo promedio de entrega | 40.8 h | 32.0 h |
+| Tiempo mediano de entrega | 0.7 h | 0.5 h |
+| Integraciones hacia main | 2 | 0 |
+| Integraciones hacia develop | 6 | 5 |
+| Frecuencia hacia main | 0.67/semana | 0.00/semana |
+| Frecuencia hacia develop | 2.00/semana | 1.67/semana |
 
-La muestra S08 es pequeña. El promedio aumenta por el PR #35, mientras la mediana permanece próxima a los PR de integración rápida. Los resultados describen el flujo observado; no constituyen por sí solos una evaluación del desempeño del equipo.
+Las mediciones corresponden a dos ventanas distintas de 21 días. No representan una serie continua de todas las semanas.
 
-## 3. Captura histórica S04
-
-La evidencia original se conserva en [`metricas_s04_raw.json`](metricas_s04_raw.json).
-
-| Elemento | Valor |
-|---|---|
-| Fecha de extracción | `2026-09-15T23:38:38.097Z` |
-| Inicio de ventana | `2026-08-25T23:38:35.403Z` |
-| Fin de ventana | `2026-09-15T23:38:35.403Z` |
-| Muestra | 8 PR fusionados |
-| PR hacia `main` | #12, #1 |
-| PR hacia `develop` | #17, #14, #10, #8, #5, #3 |
-
-Resultados conservados: promedio de 40.8 horas, mediana de 0.7 horas, 0.67 integraciones por semana hacia `main` y 2.00 integraciones por semana hacia `develop`.
-
-## 4. Captura de cierre S08
-
-La salida completa se conserva en [`metricas_raw.json`](metricas_raw.json).
-
-| Elemento | Valor |
-|---|---|
-| Repositorio | `Alex-Jeanpier-Chata/is-2026-nexo` |
-| Fuente | GitHub API |
-| Fecha de extracción | `2026-10-20T14:58:51.514Z` |
-| Inicio de ventana | `2026-09-29T14:58:22.858Z` |
-| Fin de ventana | `2026-10-20T14:58:22.858Z` |
-| Duración | 21 días / 3 semanas |
-| PR cerrados consultados | 17 |
-| PR fusionados en la ventana | 3 |
+## 4. Resultados S08
 
 ### 4.1. Tiempo de entrega
 
-| PR | Rama de origen | Destino | Primer commit | Integración | Tiempo |
-|---:|---|---|---|---|---:|
-| [#36](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/36) | `docs/s06---S07-Publicacion-de-entregables` | `develop` | 20/10/2026 13:54:50 UTC | 20/10/2026 14:00:52 UTC | 0.1 h |
-| [#35](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/35) | `docs/s07-cierre-sprint1` | `develop` | 13/10/2026 23:43:56 UTC | 20/10/2026 14:01:25 UTC | 158.3 h |
-| [#26](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/26) | `docs/s06-medicion-sprint1` | `develop` | 13/10/2026 21:44:04 UTC | 13/10/2026 21:54:29 UTC | 0.2 h |
+Se analizaron cinco PR fusionados:
 
-**Resultado S08:** promedio de **52.9 horas** y mediana de **0.2 horas**, con **N = 3 PR**.
+| PR | Rama destino | Tiempo de entrega |
+|---|---|---:|
+| [#26](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/26) | develop | 0.2 h |
+| [#35](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/35) | develop | 158.3 h |
+| [#36](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/36) | develop | 0.1 h |
+| [#38](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/38) | develop | 0.7 h |
+| [#40](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/40) | develop | 0.5 h |
+
+**Resultados:**
+
+- Total de PR: 5.
+- Promedio: 32.0 horas.
+- Mediana: 0.5 horas.
+
+El PR #35 presenta un tiempo notablemente mayor que los demás, elevando el promedio.
+
+La mediana describe mejor el valor central de esta muestra, aunque ambos indicadores deben conservarse.
+
+El tiempo calculado no equivale al tiempo efectivo de programación ni al tiempo exclusivo de revisión.
 
 ### 4.2. Frecuencia de integración
 
-- `main`: 0 integraciones en 3 semanas; **0.00 integraciones/semana**, N = 0.
-- `develop`: 3 integraciones en 3 semanas; **1.00 integración/semana**, N = 3 (#36, #35 y #26).
+| Rama | Integraciones | Frecuencia semanal |
+|---|---:|---:|
+| main | 0 | 0.00 |
+| develop | 5 | 1.67 |
 
-El valor cero hacia `main` significa que no hubo PR fusionados a esa rama dentro de la ventana. No representa frecuencia de despliegue ni ausencia de trabajo integrado en `develop`.
+La actividad de integración se concentra en `develop`, conforme al flujo de ramas adoptado por el Equipo Nexo.
 
-## 5. Indicadores pendientes
+La ausencia de integraciones hacia `main` no implica ausencia de trabajo desarrollado.
 
-| Indicador | Estado | Información faltante | Activación prevista |
-|---|---|---|---|
-| Frecuencia de despliegue | Pendiente | Registro automatizado de despliegues reales a producción | Semana 16 |
-| Tasa de fallos de cambios | Pendiente | Relación entre despliegues y fallos o correcciones posteriores | Semana 16 |
-| Tiempo de restauración | Pendiente | Monitoreo, incidentes y marcas temporales de recuperación | Semana 16 |
+## 5. Indicadores DORA sin medición
 
-No se asignan ceros, estimaciones ni equivalencias con merges a estos tres indicadores.
+| Indicador | Situación | Motivo |
+|---|---|---|
+| Frecuencia de despliegue | Sin medición | No existe registro verificable de despliegues a producción |
+| Tasa de fallos de cambios | Sin medición | No existe historial suficiente de fallos asociados a despliegues |
+| Tiempo de restauración | Sin medición | No existen registros de incidentes y recuperación productiva |
 
-## 6. Reproducción
+La instrumentación productiva de estos indicadores está prevista para la Semana 16.
 
-El corte S08 se reproduce en PowerShell con:
+Las integraciones de GitHub no sustituyen mediciones de despliegue.
 
-```powershell
-$env:METRICAS_FECHA_FIN = '2026-10-20T14:58:22.858Z'
-node scripts/metricas-dora.js
-```
+## 6. Interpretación general
 
-`METRICAS_FECHA_FIN` fija el final de la ventana. Si se omite, el script utiliza la hora de ejecución. `GITHUB_TOKEN` es opcional para el repositorio público y puede definirse para usar una consulta autenticada.
+La comparación entre S04 y S08 permite observar:
 
-## Referencias
+- El promedio de entrega disminuyó de 40.8 a 32.0 horas.
+- La mediana disminuyó de 0.7 a 0.5 horas.
+- La frecuencia de integración hacia develop pasó de 2.00 a 1.67 por semana.
+- Las integraciones continúan concentradas en la rama de desarrollo.
 
-- Forsgren, N., et al. (2023). *Metrics for Agile Teams (The DORA Metrics)*. DORA State of DevOps Report.
-- IEEE Computer Society. (2024). *Guide to the Software Engineering Body of Knowledge (SWEBOK Guide) v4.0*, §7.
-- Universidad Nacional Jorge Basadre Grohmann. (2026). *Sílabo de Ingeniería de Software I, 2026-II*.
+Los resultados describen las ventanas observadas, pero no demuestran por sí solos una mejora sostenida ni una relación causal.
+
+La muestra es reducida y contiene un valor extremo que afecta considerablemente el promedio.
+
+## 7. Evidencia y reproducibilidad
+
+**Archivos de evidencia:**
+
+- `metricas_s04_raw.json`: medición histórica S04.
+- `metricas_raw.json`: medición consolidada S08.
+- `scripts/metricas-dora.js`: programa de extracción y cálculo.
+
+Para reproducir S08 se utiliza la fecha de referencia conservada en `metricas_raw.json`, sin modificar la ventana de 21 días.
+
+Los registros se obtienen de GitHub API y pueden contrastarse mediante los PR originales.
+
+## 8. Conclusión
+
+El dashboard permite evaluar de manera reproducible una parte del flujo de desarrollo de HELA.
+
+La información confirma cinco integraciones durante la ventana S08 y un tiempo mediano de entrega de 0.5 horas.
+
+Las mediciones constituyen evidencia del seguimiento del proceso, con las limitaciones propias del tamaño de muestra y de la ausencia de datos productivos.
+
+Estos resultados se incorporan al Expediente de Proceso de la Semana 08 como evidencia cuantitativa del Equipo Nexo.
