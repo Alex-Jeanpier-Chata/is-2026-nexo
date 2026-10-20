@@ -1,10 +1,14 @@
 # HELA — Semana 08: mapa inicial de requisitos y evidencia
 
-**Equipo:** Nexo  
-**Curso:** Ingeniería de Software I, 2026-II  
-**Fecha de corte:** 20 de octubre de 2026  
-**Repositorio:** `Alex-Jeanpier-Chata/is-2026-nexo`  
-**Rama base:** `develop`  
+**Equipo:** Nexo
+
+**Curso:** Ingeniería de Software I, 2026-II
+
+**Fecha de corte:** 20 de octubre de 2026
+
+**Repositorio:** `Alex-Jeanpier-Chata/is-2026-nexo`
+
+**Rama base:** `develop`
 **Commit base:** `803de71f4077abbea9132650850f3cdde57c8320`
 
 ## 1. Propósito
