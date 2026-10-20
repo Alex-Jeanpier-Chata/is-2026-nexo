@@ -146,3 +146,100 @@ Hasta entonces, el estado documental de la auditoría cruzada es **pendiente**, 
 - `git tag --list`: `linea-base-heredada`, `v0.1.0-baseline` y `v0.2.0-vertical-slice` localizadas.
 - `npm test` fuera del sandbox de red local, 2026-10-20: **1 prueba aprobada, 0 fallidas**.
 - La primera ejecución dentro del sandbox falló con `EACCES` al conectar a `127.0.0.1`; no fue un fallo funcional. La repetición autorizada fuera de esa restricción completó correctamente.
+
+## 13. Respuesta del Equipo Nexo a las desviaciones identificadas
+
+### 13.1. Alcance
+
+El Equipo Nexo realizó una revisión interna de las evidencias disponibles para preparar la auditoría cruzada de S08.
+
+Las observaciones de este apartado proceden de la revisión interna y del historial verificable de GitHub. No se atribuyen al equipo auditor externo.
+
+La clasificación definitiva corresponde al registro emitido por el equipo que realice la auditoría cruzada.
+
+### 13.2. Desviaciones y tratamiento
+
+| ID | Resultados relacionados | Desviación identificada | Tratamiento |
+|---|---|---|---|
+| D-01 | PM.O1, PM.O2, PM.O3, PM.O4, PM.O6, SI.O2, SI.O6 | No se localizó evidencia suficiente de participación y aprobación del cliente. | Conservar la limitación y solicitar la identificación del rol de cliente aplicable al proyecto académico. |
+| D-02 | PM.O1 | No se localizó un estudio de factibilidad realizado antes del inicio del proyecto. | Verificar si existe evidencia histórica auténtica; de lo contrario, registrar su ausencia sin retrofechar documentos. |
+| D-03 | PM.O2, PM.O7, SI.O7 | Los PR #40 y #41 fueron fusionados sin aprobación formal registrada. | Documentar la excepción al DoD y reforzar la revisión previa de futuros PR. |
+| D-04 | SI.O4, SI.O5, SI.O7 | La cobertura de pruebas estaba limitada principalmente al caso exitoso de CU-06. | Se amplió la suite a 13 pruebas aprobadas mediante PR #40; mantener identificados los componentes aún no cubiertos. |
+| D-05 | PM.O2, PM.O5 | No se dispone de una línea base histórica completa para reconstruir la velocidad global y el burndown diario del Sprint 1. | Conservar las limitaciones de S06–S07 y establecer registros iniciales verificables para futuras iteraciones. |
+| D-06 | SI.O6 | No existe evidencia de un producto HELA completo, aceptado y acompañado de toda su documentación operativa. | Continuar su construcción en las iteraciones previstas, sin declarar entregado el producto completo. |
+| D-07 | PM.O4 | Las observaciones de retrospectiva documentadas requieren ratificación y evidencia auténtica de la actividad grupal. | Incorporar actas o exportaciones auténticas cuando existan; no atribuir declaraciones individuales no confirmadas. |
+
+### 13.3. Correcciones acreditadas durante S08
+
+**Validación CU-06**
+
+- Evidencia: PR #40.
+- Corrección integrada en `develop`.
+- 13 pruebas automatizadas aprobadas.
+- Rechazo de las entradas inválidas cubiertas por la suite.
+- No se atribuye cobertura completa del sistema.
+
+**Dashboard del proceso**
+
+- Evidencia: PR #41.
+- Ventana de observación: 21 días.
+- PR fusionados: 5.
+- Promedio de entrega: 32.0 horas.
+- Mediana: 0.5 horas.
+- Frecuencia de integración en `develop`: 1.67 por semana.
+
+**Seguimiento de especificación**
+
+- Evidencia: Issue #34 y documento de verificación AM-03.
+- Indicador documentado: 100 % (1/1).
+- La decisión funcional del Issue #6 continúa abierta y trazable.
+
+**Control del DoD**
+
+- Evidencia: Issue #32 y documento de verificación AM-01.
+- Se incorporó un control estandarizado en la plantilla de actividades.
+- El primer corte registró 1/1.
+- La muestra ampliada requiere verificación completa antes de declarar un indicador definitivo.
+
+### 13.4. Límites de la respuesta
+
+Las correcciones acreditadas no eliminan automáticamente todas las desviaciones.
+
+La auditoría cruzada debe conservar sus observaciones originales y el Equipo Nexo debe responderlas por escrito, sin modificar los estados asignados por el auditor.
+
+## 14. Plan de acciones y seguimiento
+
+Las acciones siguientes se proponen a partir de la revisión interna. No se presentan como acuerdos emitidos por el equipo auditor cruzado.
+
+| Acción | Resultados relacionados | Responsable de seguimiento | Momento de entrada | Indicador o evidencia |
+|---|---|---|---|---|
+| Completar la verificación de AM-01 | PM.O7, SI.O7 | Elvis Ronald Arocutipa Quispe, Issue #32 | S08 | Issues aplicables con DoD verificado / total de Issues aplicables |
+| Fortalecer las revisiones de PR | PM.O6, PM.O7, SI.O7 | Alex Jeanpier Chata Chino, Issue #33 | Sprint 2, S10–S11 | Al menos 90 % de PR con primera revisión registrada dentro de 48 horas |
+| Mantener las decisiones funcionales trazables | PM.O3, SI.O2 | Alex Jeanpier Chata Chino, Issue #6 | Seguimiento continuo | Decisión aprobada y cambios relacionados trazables, si se resuelve |
+| Verificar la corrección DT-01 y las pruebas DT-03 | SI.O4, SI.O5, SI.O7 | Oscar Fabian Choque Palza, Issue #28; Alex Jeanpier Chata Chino, Issue #30 | Cierre técnico S08 | PR #40, 13 pruebas aprobadas y verificación de criterios DoD |
+| Consolidar registros de pruebas de los incrementos | SI.O4, SI.O5, SI.O7 | Equipo Nexo, asignación interna por confirmar | Sprint 2 y Unidad 2 | Casos ejecutados, resultados y defectos documentados |
+| Fortalecer el registro de riesgos y planificación | PM.O1, PM.O2, PM.O5 | Equipo Nexo, asignación interna por confirmar | Sprint 2 | Plan versionado, riesgos identificados y seguimiento verificable |
+| Continuar la construcción del producto y documentación operativa | SI.O6 | Equipo Nexo, asignación interna por confirmar | Unidad 2 | Incrementos, documentación y evidencias de aceptación correspondientes |
+| Incorporar el registro de auditoría cruzada | PM.O7, SI.O7 | Equipo auditor par, según asignación docente | S08 | Checklist auténtico con catorce resultados, observaciones y firmas |
+
+### 14.1. Seguimiento de las acciones
+
+Cada acción debe conservar un vínculo a su Issue, Pull Request, documento o registro correspondiente.
+
+El momento de entrada indica cuándo corresponde abordar una acción; no significa que ya esté ejecutada.
+
+Los resultados que requieren evidencia del cliente o de otro equipo conservan explícitamente esa dependencia.
+
+### 14.2. Preparación del cierre S08
+
+El informe definitivo debe incorporar:
+
+- Las cinco condiciones de entrada.
+- Los catorce resultados PM.O1–PM.O7 y SI.O1–SI.O7.
+- El registro recibido del equipo auditor, sin alterar sus evaluaciones.
+- Las respuestas justificadas del Equipo Nexo.
+- Las acciones correctivas con responsable, momento e indicador.
+- La referencia al commit auditado.
+- Las contribuciones acreditadas de los integrantes.
+
+No se declara conformidad ISO/IEC 29110, certificación ni nivel de madurez.
