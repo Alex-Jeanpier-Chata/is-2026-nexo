@@ -1,50 +1,164 @@
-# HELA — Semana 06: reporte de velocidad y burndown parcial del Sprint 1
+# HELA — Semana 06: Reporte de velocidad y burndown parcial del Sprint 1
 
 **Equipo:** Nexo  
-**Curso:** Ingeniería de Software I, 2026-II  
-**Herramienta:** [GitHub Projects — is-2026-nexo](https://github.com/users/Alex-Jeanpier-Chata/projects/2)  
-**Estado documental:** medición parcial reconstruida a partir de registros verificables y de una estimación consolidada posteriormente.
+**Curso:** Ingeniería de Software I — 2026-II  
+**Proyecto:** HELA — Sistema web de gestión para restaurantes  
+**Sprint:** Sprint 1 — Semanas académicas 06 y 07  
+**Herramienta:** [GitHub Projects — Equipo Nexo](https://github.com/users/Alex-Jeanpier-Chata/projects/2)  
+**Tipo de documento:** Reporte de seguimiento parcial con reconstrucción retrospectiva de evidencias.
 
-## 1. Alcance del reporte
+## 1. Objetivo y alcance
 
-El Sprint 1 corresponde a las semanas académicas 06 y 07. El corte académico de S06 es el punto de observación **intermedio**, no el cierre del Sprint 1. Solo se consideran terminados los elementos que satisfacen la Definition of Done (DoD) del Equipo Nexo. La integración y las revisiones deben contrastarse con el repositorio antes de declarar un elemento terminado.
+El presente reporte analiza el avance parcial del Sprint 1 durante la Semana 06, utilizando los registros disponibles en GitHub Issues, GitHub Projects y los acuerdos de trabajo del Equipo Nexo.
 
-## 2. Línea base estimada de trabajo S06
+La Semana 06 representa un punto de seguimiento intermedio y no el cierre del sprint, correspondiente a la Semana 07.
 
-| Issue | Trabajo | Story Points | Estado registrado en el seguimiento |
+El análisis comprende tres actividades documentales de S06: medición de velocidad y burndown, catálogo de deuda técnica y retrospectiva intermedia.
+
+Se aplica la Definition of Done (DoD) establecida en la Semana 03. Un elemento solo aporta Story Points a la velocidad cuando existen evidencias suficientes de que cumplió sus criterios de terminación.
+
+**Limitación temporal:** la fecha exacta de inicio del Sprint 1, el día específico del corte intermedio y el historial completo de cambios del tablero no se encuentran suficientemente corroborados mediante los registros disponibles. Por ello, no se asignan fechas, estados diarios ni compromisos iniciales supuestos.
+
+## 2. Actividades y estimación regularizada
+
+Para el seguimiento documental de S06 se identificaron las siguientes actividades:
+
+| Issue | Actividad | Story Points | Situación considerada en la reconstrucción |
 |---|---|---:|---|
-| [#22](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/22) | Reporte parcial de velocidad y burndown | 3 | En progreso |
-| [#23](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/23) | Catálogo priorizado de deuda técnica | 5 | Pendiente |
-| [#25](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/25) | Retrospectiva intermedia y acciones | 3 | Pendiente |
-| | **Total** | **11** | |
+| [#22](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/22) | Reporte parcial de velocidad y burndown | 3 | En desarrollo durante S06 |
+| [#23](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/23) | Catálogo priorizado de deuda técnica | 5 | Sin terminación acreditada al corte |
+| [#25](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/25) | Retrospectiva intermedia y acciones de mejora | 3 | Sin terminación acreditada al corte |
+| **Total** | | **11 SP** | |
 
-El [Issue #21](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/21) coordina el trabajo de S06 y no recibe Story Points para evitar doble conteo. **Los 11 puntos se consignaron como estimación regularizada después del corte original**, por lo que no pueden presentarse como compromiso histórico original del sprint.
+El [Issue #21](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/21) cumple una función de coordinación general y no recibe Story Points adicionales, evitando contabilizar dos veces las actividades.
 
-## 3. Cálculo de velocidad parcial
+**Precisión metodológica:** los 11 SP corresponden a una estimación regularizada posteriormente. No existe evidencia suficiente para afirmar que constituyeron una línea base completa, aprobada y congelada al inicio del Sprint 1.
 
-La fórmula de conteo establecida es:
+Los estados indicados describen la reconstrucción documental del trabajo y no sustituyen el historial fechado de transiciones de GitHub Projects.
 
-`Velocidad parcial (SP) = suma de SP de elementos que cumplen DoD al momento del corte`.
+## 3. Cálculo de la velocidad parcial
 
-El registro disponible no acredita que los tres elementos de S06 cumplieran DoD durante el corte académico original. Por tanto, **0 SP aparecen verificables como terminados para esos tres elementos en ese corte**; ello no equivale a una medición completa de todos los elementos que pudieran haber conformado Sprint 1.
+La velocidad se determina mediante la siguiente expresión:
 
-El valor de velocidad parcial histórica total del Sprint 1 **no se puede reconstruir con precisión** usando exclusivamente la estimación regularizada de S06 y el tablero consultado. No debe confundirse con la velocidad de cierre solicitada en S07.
+**Velocidad parcial (SP) = suma de Story Points de los elementos con DoD acreditada al momento del corte.**
 
-## 4. Burndown parcial: datos de reconstrucción
+La evidencia documental disponible no permite acreditar que los Issues #22, #23 y #25 cumplieran íntegramente la DoD durante el corte intermedio de S06.
 
-| Punto | SP estimados de S06 | SP terminados con DoD verificable | SP restantes de S06 |
+Por consiguiente:
+
+| Indicador | Resultado |
+|---|---:|
+| Story Points estimados posteriormente para las tres actividades | 11 SP |
+| Story Points con DoD acreditada mediante evidencia del corte S06 | 0 SP |
+| Story Points sin acreditación de DoD para ese corte | 11 SP |
+| Velocidad parcial histórica del Sprint 1 completo | No determinable |
+
+El resultado de **0 SP acreditables** corresponde exclusivamente a las tres actividades analizadas y al nivel de evidencia disponible para el corte de S06.
+
+Este valor **no significa ausencia de trabajo realizado, ni permite concluir que la velocidad total del Sprint 1 haya sido cero**.
+
+### 3.1. Diferencia entre publicación y cumplimiento del DoD
+
+Los tres entregables documentales de S06 fueron integrados posteriormente mediante el [PR #26](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/26), el 13 de octubre de 2026.
+
+Los Issues #22, #23 y #25 se cerraron ese mismo día, después de la integración documental.
+
+En una revisión posterior, los tres Issues muestran sus criterios de aceptación marcados. Sin embargo, esas marcas no constituyen por sí mismas evidencia contemporánea del cumplimiento de la DoD en el corte original de S06.
+
+Adicionalmente, el historial consultado del PR #26 no registra una revisión formal aprobatoria. Por ello, se distingue entre:
+
+- **Trabajo documentado:** existen entregables publicados en el repositorio.
+- **Cierre administrativo:** los Issues fueron cerrados en GitHub.
+- **DoD acreditada:** requiere comprobar los criterios aplicables y sus evidencias en el momento correspondiente.
+
+La diferencia debe mantenerse explícita para evitar atribuir retroactivamente un nivel de cumplimiento no demostrado.
+
+## 4. Burndown parcial y limitaciones de reconstrucción
+
+Un burndown permite representar la evolución del trabajo restante durante un sprint. Su construcción histórica requiere una línea base identificable y registros fechados de la terminación de los elementos.
+
+En HELA no se dispone de información suficiente para reconstruir una serie diaria completa de los Story Points comprometidos y terminados durante S06.
+
+En consecuencia, se presenta únicamente el siguiente cuadro de control documental:
+
+| Referencia | SP regularizados | SP con DoD acreditada al corte S06 | SP sin DoD acreditada |
 |---|---:|---:|---:|
-| Línea base regularizada | 11 | 0 | 11 |
-| Corte S06 verificable | 11 | 0 | 11 |
+| Subconjunto de actividades documentales S06 | 11 | 0 | 11 |
 
-La tabla representa **dos puntos documentales de referencia** y no una serie diaria histórica. Sin cambios de estado fechados con suficiente detalle, no es correcto dibujar descensos diarios como observaciones reales. La curva ideal podrá mostrarse como referencia teórica, identificada expresamente como tal, y no como evidencia de ejecución.
+Los 11 SP sin acreditación **no representan necesariamente 11 SP de esfuerzo efectivamente pendiente**, sino puntos cuya terminación formal no pudo demostrarse en el corte estudiado.
 
-## 5. Interpretación
+### 4.1. Interpretación del burndown
 
-La medición separa el esfuerzo estimado del trabajo efectivamente terminado y mantiene la regla de que un elemento solo aporta puntos si cumple el DoD. La documentación de S07 completará el reporte de cierre, los enlaces a cambios integrados y el burndown final con información verificable hasta ese momento.
+No corresponde representar descensos diarios, porcentajes de avance o una curva histórica observada sin registros suficientes.
 
-## 6. Fuentes de evidencia
+Tampoco sería correcto convertir la estimación regularizada de 11 SP en un compromiso inicial del sprint.
 
-- [GitHub Project del Equipo Nexo](https://github.com/users/Alex-Jeanpier-Chata/projects/2)
-- [Issue #21](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/21), [#22](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/22), [#23](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/23), [#25](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/25)
-- Paquete de acuerdos y Definition of Done publicado en `docs/proceso` (S03)
+Por este motivo:
+
+- No se presenta una curva diaria como resultado real.
+- No se interpolan fechas ni estados del tablero.
+- No se confunden Story Points sin DoD acreditada con esfuerzo real restante.
+- La evolución documental posterior se examina en el reporte de cierre de S07.
+
+La ausencia de una serie histórica constituye una limitación de trazabilidad del seguimiento, que debe considerarse en las acciones de mejora del proceso.
+
+## 5. Análisis y oportunidades de mejora
+
+El seguimiento parcial permite identificar cuatro aspectos relevantes.
+
+**5.1. Estimación y planificación**
+
+La regularización posterior de los Story Points dificulta contrastar las estimaciones iniciales con los resultados del sprint. Es necesario registrar y conservar la línea base al comenzar cada iteración.
+
+**5.2. Verificación de la Definition of Done**
+
+La existencia de documentos o el cierre de Issues no garantiza por sí mismo el cumplimiento integral de la DoD. Cada cierre debe acompañarse de las evidencias aplicables y de la revisión correspondiente.
+
+**5.3. Historial del tablero**
+
+La falta de transiciones diarias suficientemente verificables impide construir un burndown histórico completo. Se requiere mantener actualizado GitHub Projects y conservar referencias fechadas del avance.
+
+**5.4. Trazabilidad documental**
+
+Los Issues, Pull Requests, entregables y acuerdos deben mantenerse vinculados para distinguir el trabajo planificado, ejecutado, publicado y formalmente aceptado.
+
+Estas observaciones sirven como antecedentes del cierre del Sprint 1 y del plan de mejora documentados en la Semana 07.
+
+## 6. Relación con el cierre de la Semana 07
+
+El reporte de S07 complementa esta medición mediante la revisión de los documentos efectivamente publicados, el estado de los Issues y las limitaciones de acreditación de la DoD.
+
+La documentación de cierre se encuentra en:
+
+- [PR #35 — Cierre del Sprint 1](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/35).
+- `docs/proceso/HELA_S07_Reporte_Cierre_Velocidad_Burndown.md`.
+- `docs/proceso/HELA_S07_Plan_Mejora_Proceso.md`.
+
+Las acciones de mejora asociadas se encuentran registradas en:
+
+- [#32 — AM-01: Verificación de DoD y trazabilidad](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/32).
+- [#33 — AM-02: Seguimiento y revisión de Pull Requests](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/33).
+- [#34 — AM-03: Seguimiento de decisiones de especificación](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/34).
+
+La medición parcial de S06 y el cierre documental de S07 deben interpretarse como análisis complementarios, sin confundir el subconjunto de 11 SP regularizados con la velocidad histórica total del Sprint 1.
+
+## 7. Fuentes de evidencia
+
+1. [GitHub Projects — Equipo Nexo](https://github.com/users/Alex-Jeanpier-Chata/projects/2).
+2. [Issue #21 — Coordinación de S06](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/21).
+3. [Issue #22 — Reporte parcial de velocidad y burndown](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/22).
+4. [Issue #23 — Catálogo de deuda técnica](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/23).
+5. [Issue #25 — Retrospectiva intermedia](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/25).
+6. [PR #26 — Publicación de documentación S06](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/26).
+7. [PR #35 — Documentación de cierre S07](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/35).
+8. Paquete de acuerdos S03 y Definition of Done, disponibles en `docs/proceso`.
+
+## 8. Conclusión
+
+El seguimiento parcial de S06 permitió identificar tres actividades documentales que posteriormente fueron estimadas en un total de 11 Story Points.
+
+No se encontraron evidencias suficientes para acreditar su cumplimiento integral de la Definition of Done durante el corte intermedio. En consecuencia, el subconjunto presenta **0 SP formalmente acreditables para ese corte**, sin que ello represente la velocidad global del Sprint 1.
+
+La integración posterior de los entregables demuestra producción documental, pero no elimina las limitaciones del historial de estimación, seguimiento y verificación.
+
+El resultado proporciona una base verificable para analizar el cierre de S07, fortalecer la trazabilidad y preparar la auditoría de procesos de la Semana 08.
