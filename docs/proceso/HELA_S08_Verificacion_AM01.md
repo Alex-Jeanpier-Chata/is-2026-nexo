@@ -1,6 +1,6 @@
 # HELA — Semana 08: verificación de AM-01
 
-**Equipo:** Nexo
+**Equipo:** Nexo 
 
 **Curso:** Ingeniería de Software I, 2026-II
 
