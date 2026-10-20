@@ -41,7 +41,24 @@ La consulta final de Issues cerrados entre el 14 y el 20 de octubre de 2026, con
 | Resultado del indicador | **100 % (1/1)** |
 
 El Issue #31 registra el cumplimiento de sus criterios, la revisión documental, la trazabilidad hacia el hallazgo protegido y la justificación de que commits y PR no aplican porque el producto de la actividad es la declaración contenida en el propio Issue. El resultado cumple el indicador, aunque su capacidad de generalización es limitada por tratarse de una muestra de un solo cierre.
+### 3.1. Seguimiento posterior al primer corte
 
+Después de la primera medición se registró el cierre del Issue #34, correspondiente a AM-03.
+
+| Issue | Fecha de cierre (UTC) | Evidencia disponible | Verificación estandarizada |
+|---|---|---|---|
+| [#31](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/31) | 20/10/2026, 15:09:55 | Checklist de declaración FA-01, trazabilidad a DT-01 y justificación de PR no aplicable | Pendiente de completar identificación y fecha de verificación del DoD |
+| [#34](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/34) | 20/10/2026, 15:16:32 | Checklist de seguimiento AM-03, indicador 1/1 y trazabilidad al Issue #6 | Pendiente de completar identificación y fecha de verificación del DoD |
+
+**Muestra ampliada:** 2 Issues cerrados aplicables, sin exclusiones.
+
+El resultado anterior de **100 % (1/1)** se conserva como registro del primer corte, realizado a las 15:09:55 UTC. No representa automáticamente el resultado de la muestra ampliada.
+
+Aunque ambos Issues contienen criterios de cierre, todavía debe comprobarse su correspondencia completa con la verificación estandarizada del DoD, incluyendo responsable, fecha y criterios no aplicables.
+
+Por tanto, **el indicador definitivo para la muestra de 2 Issues permanece pendiente de acreditación**. No se declara un cumplimiento de 100 % (2/2) sin completar las verificaciones individuales.
+
+La acción AM-01 continúa abierta en el Issue #32 hasta registrar el resultado definitivo.
 ## 4. Diagnóstico histórico previo a la aplicación
 
 Para establecer una línea base diagnóstica, se revisó la muestra de cierres inmediatamente anterior, correspondiente al 13 de octubre de 2026. Esta revisión no forma parte del resultado S08.
