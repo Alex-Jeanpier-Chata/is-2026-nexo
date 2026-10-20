@@ -1,10 +1,10 @@
 {
   "repositorio": "Alex-Jeanpier-Chata/is-2026-nexo",
-  "fechaExtraccion": "2026-09-15T23:38:38.097Z",
+  "fechaExtraccion": "2026-10-20T14:58:51.514Z",
   "fuente": "GitHub API",
   "ventana": {
-    "inicio": "2026-08-25T23:38:35.403Z",
-    "fin": "2026-09-15T23:38:35.403Z",
+    "inicio": "2026-09-29T14:58:22.858Z",
+    "fin": "2026-10-20T14:58:22.858Z",
     "dias": 21,
     "semanas": 3
   },
@@ -13,144 +13,73 @@
     "integracion": "develop"
   },
   "resumenExtraccion": {
-    "pullRequestsCerrados": 12,
-    "pullRequestsFusionadosEnVentana": 8
+    "pullRequestsCerrados": 17,
+    "pullRequestsFusionadosEnVentana": 3
   },
   "metricas": {
     "tiempoEntrega": {
-      "muestra": 8,
-      "promedioHoras": 40.8,
-      "medianaHoras": 0.7
+      "muestra": 3,
+      "promedioHoras": 52.9,
+      "medianaHoras": 0.2
     },
     "frecuenciaIntegracionPrincipal": {
       "rama": "main",
-      "muestra": 2,
+      "muestra": 0,
       "semanasObservadas": 3,
-      "frecuenciaPorSemana": 0.67,
-      "pullRequests": [
-        12,
-        1
-      ]
+      "frecuenciaPorSemana": 0,
+      "pullRequests": []
     },
     "frecuenciaIntegracionInterna": {
       "rama": "develop",
-      "muestra": 6,
+      "muestra": 3,
       "semanasObservadas": 3,
-      "frecuenciaPorSemana": 2,
+      "frecuenciaPorSemana": 1,
       "pullRequests": [
-        17,
-        14,
-        10,
-        8,
-        5,
-        3
+        36,
+        35,
+        26
       ]
     }
   },
   "pullRequests": [
     {
-      "numero": 17,
-      "titulo": "docs: publica paquete de acuerdos S03",
-      "ramaOrigen": "docs/s03-acuerdos-equipo",
+      "numero": 36,
+      "titulo": "Docs/s06   s07 publicacion de entregables",
+      "ramaOrigen": "docs/s06---S07-Publicacion-de-entregables",
       "ramaDestino": "develop",
       "primerCommit": {
-        "sha": "93486e4bb5cc3dc149039cf8d4ed631f4279e06b",
-        "fecha": "2026-09-09T00:51:44Z"
+        "sha": "cecf055b5b8ce2148bf2b5103d4e95e1bd2fff59",
+        "fecha": "2026-10-20T13:54:50Z"
       },
-      "fechaIntegracion": "2026-09-15T21:01:28Z",
-      "tiempoEntregaHoras": 164.2,
-      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/17"
-    },
-    {
-      "numero": 14,
-      "titulo": "chore: plantilla para issues de especificacion y actualizacion de pla…",
-      "ramaOrigen": "chore/s03-configuracion-git",
-      "ramaDestino": "develop",
-      "primerCommit": {
-        "sha": "e13784db3e617d3478afaeb7de2a66a726e646ad",
-        "fecha": "2026-09-08T23:50:48Z"
-      },
-      "fechaIntegracion": "2026-09-09T00:01:54Z",
-      "tiempoEntregaHoras": 0.2,
-      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/14"
-    },
-    {
-      "numero": 12,
-      "titulo": "Release: S02 - Primera Rebanada Vertical y Mapeo SWEBOK",
-      "ramaOrigen": "develop",
-      "ramaDestino": "main",
-      "primerCommit": {
-        "sha": "c5dfbfba8b43abf5b62642efa84cce71fd2101c5",
-        "fecha": "2026-09-02T00:50:05Z"
-      },
-      "fechaIntegracion": "2026-09-07T20:51:55Z",
-      "tiempoEntregaHoras": 140,
-      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/12"
-    },
-    {
-      "numero": 10,
-      "titulo": "docs: actualiza documentacion de proceso y contrato vigente",
-      "ramaOrigen": "feature/s02-documentacion-equipo-9",
-      "ramaDestino": "develop",
-      "primerCommit": {
-        "sha": "6ce09d2ca6123b4934aedb1c6bb46f9f1937540f",
-        "fecha": "2026-09-04T16:25:36Z"
-      },
-      "fechaIntegracion": "2026-09-04T16:50:13Z",
-      "tiempoEntregaHoras": 0.4,
-      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/10"
-    },
-    {
-      "numero": 8,
-      "titulo": "feat: implementa primera rebanada vertical CU-06",
-      "ramaOrigen": "feat/s02-pedido-temporal-qr",
-      "ramaDestino": "develop",
-      "primerCommit": {
-        "sha": "1717f4e9ea9a36ec11923468f1c35ff90390fcf0",
-        "fecha": "2026-09-04T01:40:31Z"
-      },
-      "fechaIntegracion": "2026-09-04T02:40:26Z",
-      "tiempoEntregaHoras": 1,
-      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/8"
-    },
-    {
-      "numero": 5,
-      "titulo": "chore: Plantilla para Pull Request",
-      "ramaOrigen": "chore/s02-configuracion-git",
-      "ramaDestino": "develop",
-      "primerCommit": {
-        "sha": "7a0eca63dd6ddf711e635ca3ec985331f5aae789",
-        "fecha": "2026-09-02T21:31:28Z"
-      },
-      "fechaIntegracion": "2026-09-02T21:47:00Z",
-      "tiempoEntregaHoras": 0.3,
-      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/5"
-    },
-    {
-      "numero": 3,
-      "titulo": "docs: actualiza OpenAPI de HELA v0.2.1",
-      "ramaOrigen": "docs/s02-contrato-openapi-v021",
-      "ramaDestino": "develop",
-      "primerCommit": {
-        "sha": "c5dfbfba8b43abf5b62642efa84cce71fd2101c5",
-        "fecha": "2026-09-02T00:50:05Z"
-      },
-      "fechaIntegracion": "2026-09-02T20:51:14Z",
-      "tiempoEntregaHoras": 20,
-      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/3"
-    },
-    {
-      "numero": 1,
-      "titulo": "docs: actualiza SAD y analisis de HELA.",
-      "ramaOrigen": "docs/s02-acta-y-convenciones",
-      "ramaDestino": "main",
-      "primerCommit": {
-        "sha": "f1b2fa20386113fc3125a68d3f23fd3075e82dc8",
-        "fecha": "2026-09-02T00:00:36Z"
-      },
-      "fechaIntegracion": "2026-09-02T00:06:32Z",
+      "fechaIntegracion": "2026-10-20T14:00:52Z",
       "tiempoEntregaHoras": 0.1,
-      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/1"
+      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/36"
+    },
+    {
+      "numero": 35,
+      "titulo": "Docs(s07): consolida cierre del Sprint 1",
+      "ramaOrigen": "docs/s07-cierre-sprint1",
+      "ramaDestino": "develop",
+      "primerCommit": {
+        "sha": "0a84599e3b091e8c70674ca46bfd399b273df82a",
+        "fecha": "2026-10-13T23:43:56Z"
+      },
+      "fechaIntegracion": "2026-10-20T14:01:25Z",
+      "tiempoEntregaHoras": 158.3,
+      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/35"
+    },
+    {
+      "numero": 26,
+      "titulo": "Docs/s06 medicion sprint1",
+      "ramaOrigen": "docs/s06-medicion-sprint1",
+      "ramaDestino": "develop",
+      "primerCommit": {
+        "sha": "37b5af0e6b4042093c080f278d0633d05dc21e92",
+        "fecha": "2026-10-13T21:44:04Z"
+      },
+      "fechaIntegracion": "2026-10-13T21:54:29Z",
+      "tiempoEntregaHoras": 0.2,
+      "url": "https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/pull/26"
     }
   ],
   "indicadoresPendientes": [

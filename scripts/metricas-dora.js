@@ -9,6 +9,7 @@ const RAMA_PRINCIPAL = 'main';
 const RAMA_INTEGRACION = 'develop';
 
 const TOKEN = process.env.GITHUB_TOKEN;
+const FECHA_FIN = process.env.METRICAS_FECHA_FIN;
 const API_URL = `https://api.github.com/repos/${PROPIETARIO}/${REPOSITORIO}`;
 
 const RUTA_SALIDA = path.join(
@@ -20,18 +21,18 @@ const RUTA_SALIDA = path.join(
   'metricas_raw.json'
 );
 
-if (!TOKEN) {
-  console.error('No se encontró la variable de entorno GITHUB_TOKEN.');
-  process.exit(1);
-}
-
 async function consultarGitHub(url) {
+  const headers = {
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28'
+  };
+
+  if (TOKEN) {
+    headers.Authorization = `Bearer ${TOKEN}`;
+  }
+
   const respuesta = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${TOKEN}`,
-      Accept: 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28'
-    }
+    headers
   });
 
   if (!respuesta.ok) {
@@ -52,7 +53,14 @@ async function obtenerCommitsPullRequest(numeroPr) {
 }
 
 function obtenerVentanaTemporal() {
-  const fin = new Date();
+  const fin = FECHA_FIN ? new Date(FECHA_FIN) : new Date();
+
+  if (Number.isNaN(fin.getTime())) {
+    throw new Error(
+      'METRICAS_FECHA_FIN debe contener una fecha ISO 8601 válida.'
+    );
+  }
+
   const inicio = new Date(fin);
 
   inicio.setUTCDate(inicio.getUTCDate() - DIAS_VENTANA);
