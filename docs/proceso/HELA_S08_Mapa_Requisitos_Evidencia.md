@@ -34,7 +34,7 @@ Este mapa identifica el destino y el estado inicial de las evidencias necesarias
 | Dashboard S1–S8 | `scripts/metricas-dora.js`, `panel-metricas/metricas_raw.json` y `panel-metricas/README.md` | Solo captura S04 | Preservar S04 y ejecutar una captura S08 con la misma fórmula y ventana de 21 días. |
 | Sprint 1: velocidad, burndown y deuda técnica | Documentos S06 y S07 integrados mediante PR #26, #35 y #36 | Localizada con límites declarados | Mantener las limitaciones de reconstrucción histórica y acreditación DoD. |
 | Gobernanza y mejora | Issues #28–#34 y `HELA_S07_Plan_Mejora_Proceso.md` | Localizada | Verificar AM-01 y AM-03; mantener AM-02 para S10–S11. |
-| Auditoría ISO/IEC 29110 | Material oficial S08 | Registro de auditoría recibida no localizado | No asignar estados ni firmas hasta obtener evidencia auténtica. |
+| Auditoría ISO/IEC 29110 | Material oficial S08 y `auditoria-29110/README.md` | Matriz interna completada; registro de auditoría cruzada no localizado | Someter la preclasificación a un equipo auditor distinto y registrar sus nombres, fecha y conclusiones auténticas. |
 | Trazabilidad y correcciones | Entregables S01–S07 y su historial | Parcialmente localizada | Construir la tabla semana–pieza–ubicación–fecha–corrección–destino. |
 | Semana 05 | Material S08 declara que no fue dictada | Localizada | Registrar “Semana 05 no dictada”. |
 | Contribución individual | Historial de commits, PR, Issues y archivos | Localizada para análisis | Atribuir únicamente contribuciones respaldadas por registros. |
@@ -49,7 +49,7 @@ Este mapa identifica el destino y el estado inicial de las evidencias necesarias
 - La rama de trabajo para el cierre es `docs/s08-expediente-proceso`.
 - Los documentos S07 están integrados en `develop` mediante el PR #35.
 - La corrección documental S06 está integrada mediante el PR #36.
-- No existe todavía `docs/proceso/auditoria-29110/README.md`.
+- Existe `docs/proceso/auditoria-29110/README.md` como matriz preparatoria interna; no sustituye la auditoría cruzada pendiente.
 - No existe todavía la etiqueta `v0.8.0-expediente-proceso`.
 
 ## 5. Límites del cierre
