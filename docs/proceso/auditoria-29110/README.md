@@ -1,11 +1,17 @@
 # HELA — Revisión interna de evidencias ISO/IEC 29110
 
-**Curso:** Ingeniería de Software I, 2026-II  
-**Equipo:** Nexo  
-**Proyecto:** HELA — Sistema web de gestión para restaurantes  
-**Perfil de referencia:** perfil básico de software  
-**Corte de evidencia:** 20 de octubre de 2026  
-**Commit inspeccionado:** `6d46675`  
+**Curso:** Ingeniería de Software I, 2026-II
+
+**Equipo:** Nexo
+
+**Proyecto:** HELA — Sistema web de gestión para restaurantes
+
+**Perfil de referencia:** perfil básico de software
+
+**Corte de evidencia:** 20 de octubre de 2026
+
+**Commit inspeccionado:** `6d46675`
+
 **Tipo de registro:** matriz preparatoria para la auditoría cruzada de la Semana 08
 
 ## 1. Alcance y límite de esta revisión
@@ -140,4 +146,3 @@ Hasta entonces, el estado documental de la auditoría cruzada es **pendiente**, 
 - `git tag --list`: `linea-base-heredada`, `v0.1.0-baseline` y `v0.2.0-vertical-slice` localizadas.
 - `npm test` fuera del sandbox de red local, 2026-10-20: **1 prueba aprobada, 0 fallidas**.
 - La primera ejecución dentro del sandbox falló con `EACCES` al conectar a `127.0.0.1`; no fue un fallo funcional. La repetición autorizada fuera de esa restricción completó correctamente.
-
