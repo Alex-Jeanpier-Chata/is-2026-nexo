@@ -30,17 +30,17 @@ Se considera verificación completa cuando el registro del Issue permite comprob
 
 ## 3. Resultado del período S08
 
-La consulta de Issues cerrados entre el 14 y el 20 de octubre de 2026 no devolvió casos.
+La consulta final de Issues cerrados entre el 14 y el 20 de octubre de 2026, con corte a `2026-10-20T15:09:55Z`, devolvió un caso aplicable: el [Issue #31](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo/issues/31).
 
 | Elemento | Resultado |
 |---|---:|
-| Issues cerrados en el período | 0 |
+| Issues cerrados en el período | 1 |
 | Exclusiones | 0 |
-| Issues cerrados aplicables | 0 |
-| Cumplimientos verificables | 0 |
-| Resultado del indicador | **Sin muestra** |
+| Issues cerrados aplicables | 1 |
+| Cumplimientos verificables | 1 |
+| Resultado del indicador | **100 % (1/1)** |
 
-No se calcula `0 / 0` ni se informa 100 %. La ausencia de cierres impide observar la eficacia del control durante S08; por tanto, este resultado no demuestra cumplimiento ni incumplimiento del indicador.
+El Issue #31 registra el cumplimiento de sus criterios, la revisión documental, la trazabilidad hacia el hallazgo protegido y la justificación de que commits y PR no aplican porque el producto de la actividad es la declaración contenida en el propio Issue. El resultado cumple el indicador, aunque su capacidad de generalización es limitada por tratarse de una muestra de un solo cierre.
 
 ## 4. Diagnóstico histórico previo a la aplicación
 
@@ -74,8 +74,8 @@ El control debe completarse antes de cerrar cada nuevo Issue. Los criterios no a
 ## 6. Estado de AM-01 al corte
 
 - **Implementación del control:** completada en la plantilla del repositorio.
-- **Indicador S08:** sin muestra; no evaluable por ausencia de Issues cerrados en el período.
-- **Validación de eficacia:** pendiente de la primera muestra de cierres posterior a la adopción.
+- **Indicador S08:** 100 % en una muestra de 1 Issue cerrado aplicable.
+- **Validación de eficacia:** primera aplicación verificada; debe repetirse en los siguientes cierres para ampliar la muestra.
 - **Issue #32:** permanece abierto. Su cierre requiere verificar la aplicación real del control y autorización explícita para cambiar su estado en GitHub.
 
 ## 7. Fuentes de evidencia
