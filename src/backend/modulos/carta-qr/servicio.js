@@ -75,16 +75,18 @@ class PedidoTemporalServicio {
       }
 
       for (const opcion of opciones) {
-        if (!opcion || typeof opcion !== 'object' ||
-            Array.isArray(opcion) ||
-            (opcion.nombre !== undefined &&
-             typeof opcion.nombre !== 'string') ||
-            (opcion.valor !== undefined &&
-             typeof opcion.valor !== 'string')) {
+        if (this.#esOpcionInvalida(opcion)) {
           throw this.generarError('Cada opción debe cumplir el contrato OpenAPI.');
         }
       }
     }
+  }
+
+  #esOpcionInvalida(opcion) {
+    return !opcion || typeof opcion !== 'object' ||
+      Array.isArray(opcion) ||
+      (opcion.nombre !== undefined && typeof opcion.nombre !== 'string') ||
+      (opcion.valor !== undefined && typeof opcion.valor !== 'string');
   }
 
   crearPedidoTemporal(codigoQr, datos) {
