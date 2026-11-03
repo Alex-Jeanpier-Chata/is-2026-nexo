@@ -1,6 +1,8 @@
 
 const { randomUUID } = require('node:crypto');
 
+const LIMITE_CARACTERES_OBSERVACION = 500;
+
 class PedidoTemporalServicio {
   constructor(repositorio, vigenciaMinutos) {
     if (!Number.isInteger(vigenciaMinutos) || vigenciaMinutos <= 0) {
@@ -24,7 +26,7 @@ class PedidoTemporalServicio {
 
   validarObservacion(valor, campo) {
     if (valor !== undefined &&
-        (typeof valor !== 'string' || Array.from(valor).length > 500)) {
+        (typeof valor !== 'string' || Array.from(valor).length > LIMITE_CARACTERES_OBSERVACION)) {
       throw this.generarError(`${campo} debe ser texto de hasta 500 caracteres.`);
     }
   }
