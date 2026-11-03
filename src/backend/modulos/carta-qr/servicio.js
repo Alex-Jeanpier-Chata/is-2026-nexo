@@ -68,15 +68,17 @@ class PedidoTemporalServicio {
   }
 
   #validarOpciones(opciones) {
-    if (opciones !== undefined) {
-      if (!Array.isArray(opciones)) {
-        throw this.generarError('opciones debe ser un arreglo.');
-      }
+    if (opciones === undefined) {
+      return;
+    }
 
-      for (const opcion of opciones) {
-        if (this.#esOpcionInvalida(opcion)) {
-          throw this.generarError('Cada opción debe cumplir el contrato OpenAPI.');
-        }
+    if (!Array.isArray(opciones)) {
+      throw this.generarError('opciones debe ser un arreglo.');
+    }
+
+    for (const opcion of opciones) {
+      if (this.#esOpcionInvalida(opcion)) {
+        throw this.generarError('Cada opción debe cumplir el contrato OpenAPI.');
       }
     }
   }
