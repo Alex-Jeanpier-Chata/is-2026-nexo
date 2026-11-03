@@ -46,34 +46,38 @@ class PedidoTemporalServicio {
     this.validarObservacion(datos.observacion, 'observacion');
 
     for (const item of datos.items) {
-      if (!item || typeof item !== 'object' || Array.isArray(item)) {
-        throw this.generarError('Cada item debe ser un objeto válido.');
+      this.#validarItem(item);
+    }
+  }
+
+  #validarItem(item) {
+    if (!item || typeof item !== 'object' || Array.isArray(item)) {
+      throw this.generarError('Cada item debe ser un objeto válido.');
+    }
+
+    if (!this.esUuidValido(item.productoId)) {
+      throw this.generarError('productoId debe ser un UUID válido.');
+    }
+
+    if (!Number.isInteger(item.cantidad) || item.cantidad < 1) {
+      throw this.generarError('cantidad debe ser un entero mayor o igual a 1.');
+    }
+
+    this.validarObservacion(item.observacion, 'observacion del item');
+
+    if (item.opciones !== undefined) {
+      if (!Array.isArray(item.opciones)) {
+        throw this.generarError('opciones debe ser un arreglo.');
       }
 
-      if (!this.esUuidValido(item.productoId)) {
-        throw this.generarError('productoId debe ser un UUID válido.');
-      }
-
-      if (!Number.isInteger(item.cantidad) || item.cantidad < 1) {
-        throw this.generarError('cantidad debe ser un entero mayor o igual a 1.');
-      }
-
-      this.validarObservacion(item.observacion, 'observacion del item');
-
-      if (item.opciones !== undefined) {
-        if (!Array.isArray(item.opciones)) {
-          throw this.generarError('opciones debe ser un arreglo.');
-        }
-
-        for (const opcion of item.opciones) {
-          if (!opcion || typeof opcion !== 'object' ||
-              Array.isArray(opcion) ||
-              (opcion.nombre !== undefined &&
-               typeof opcion.nombre !== 'string') ||
-              (opcion.valor !== undefined &&
-               typeof opcion.valor !== 'string')) {
-            throw this.generarError('Cada opción debe cumplir el contrato OpenAPI.');
-          }
+      for (const opcion of item.opciones) {
+        if (!opcion || typeof opcion !== 'object' ||
+            Array.isArray(opcion) ||
+            (opcion.nombre !== undefined &&
+             typeof opcion.nombre !== 'string') ||
+            (opcion.valor !== undefined &&
+             typeof opcion.valor !== 'string')) {
+          throw this.generarError('Cada opción debe cumplir el contrato OpenAPI.');
         }
       }
     }
