@@ -65,12 +65,16 @@ class PedidoTemporalServicio {
 
     this.validarObservacion(item.observacion, 'observacion del item');
 
-    if (item.opciones !== undefined) {
-      if (!Array.isArray(item.opciones)) {
+    this.#validarOpciones(item.opciones);
+  }
+
+  #validarOpciones(opciones) {
+    if (opciones !== undefined) {
+      if (!Array.isArray(opciones)) {
         throw this.generarError('opciones debe ser un arreglo.');
       }
 
-      for (const opcion of item.opciones) {
+      for (const opcion of opciones) {
         if (!opcion || typeof opcion !== 'object' ||
             Array.isArray(opcion) ||
             (opcion.nombre !== undefined &&
