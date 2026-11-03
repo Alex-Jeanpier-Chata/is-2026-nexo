@@ -30,10 +30,7 @@ class PedidoTemporalServicio {
   }
 
   validarPedido(datos) {
-    if (!datos || typeof datos !== 'object' ||
-        Array.isArray(datos) ||
-        !Array.isArray(datos.items) ||
-        datos.items.length === 0) {
+    if (this.#esEstructuraPedidoInvalida(datos)) {
       throw this.generarError('El pedido temporal debe contener al menos un item.');
     }
 
@@ -87,6 +84,13 @@ class PedidoTemporalServicio {
       Array.isArray(opcion) ||
       (opcion.nombre !== undefined && typeof opcion.nombre !== 'string') ||
       (opcion.valor !== undefined && typeof opcion.valor !== 'string');
+  }
+
+  #esEstructuraPedidoInvalida(datos) {
+    return !datos || typeof datos !== 'object' ||
+      Array.isArray(datos) ||
+      !Array.isArray(datos.items) ||
+      datos.items.length === 0;
   }
 
   crearPedidoTemporal(codigoQr, datos) {
