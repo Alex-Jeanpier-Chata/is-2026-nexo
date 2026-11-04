@@ -1,6 +1,8 @@
 
 const { randomUUID } = require('node:crypto');
 
+const LIMITE_CARACTERES_OBSERVACION = 500;
+
 class PedidoTemporalServicio {
   constructor(repositorio, vigenciaMinutos) {
     if (!Number.isInteger(vigenciaMinutos) || vigenciaMinutos <= 0) {
@@ -24,16 +26,13 @@ class PedidoTemporalServicio {
 
   validarObservacion(valor, campo) {
     if (valor !== undefined &&
-        (typeof valor !== 'string' || Array.from(valor).length > 500)) {
+        (typeof valor !== 'string' || Array.from(valor).length > LIMITE_CARACTERES_OBSERVACION)) {
       throw this.generarError(`${campo} debe ser texto de hasta 500 caracteres.`);
     }
   }
 
   validarPedido(datos) {
-    if (!datos || typeof datos !== 'object' ||
-        Array.isArray(datos) ||
-        !Array.isArray(datos.items) ||
-        datos.items.length === 0) {
+    if (this.#esEstructuraPedidoInvalida(datos)) {
       throw this.generarError('El pedido temporal debe contener al menos un item.');
     }
 
@@ -46,37 +45,56 @@ class PedidoTemporalServicio {
     this.validarObservacion(datos.observacion, 'observacion');
 
     for (const item of datos.items) {
-      if (!item || typeof item !== 'object' || Array.isArray(item)) {
-        throw this.generarError('Cada item debe ser un objeto válido.');
-      }
+      this.#validarItem(item);
+    }
+  }
 
-      if (!this.esUuidValido(item.productoId)) {
-        throw this.generarError('productoId debe ser un UUID válido.');
-      }
+  #validarItem(item) {
+    if (!item || typeof item !== 'object' || Array.isArray(item)) {
+      throw this.generarError('Cada item debe ser un objeto válido.');
+    }
 
-      if (!Number.isInteger(item.cantidad) || item.cantidad < 1) {
-        throw this.generarError('cantidad debe ser un entero mayor o igual a 1.');
-      }
+    if (!this.esUuidValido(item.productoId)) {
+      throw this.generarError('productoId debe ser un UUID válido.');
+    }
 
-      this.validarObservacion(item.observacion, 'observacion del item');
+    if (!Number.isInteger(item.cantidad) || item.cantidad < 1) {
+      throw this.generarError('cantidad debe ser un entero mayor o igual a 1.');
+    }
 
-      if (item.opciones !== undefined) {
-        if (!Array.isArray(item.opciones)) {
-          throw this.generarError('opciones debe ser un arreglo.');
-        }
+    this.validarObservacion(item.observacion, 'observacion del item');
 
-        for (const opcion of item.opciones) {
-          if (!opcion || typeof opcion !== 'object' ||
-              Array.isArray(opcion) ||
-              (opcion.nombre !== undefined &&
-               typeof opcion.nombre !== 'string') ||
-              (opcion.valor !== undefined &&
-               typeof opcion.valor !== 'string')) {
-            throw this.generarError('Cada opción debe cumplir el contrato OpenAPI.');
-          }
-        }
+    this.#validarOpciones(item.opciones);
+  }
+
+  #validarOpciones(opciones) {
+    if (opciones === undefined) {
+      return;
+    }
+
+    if (!Array.isArray(opciones)) {
+      throw this.generarError('opciones debe ser un arreglo.');
+    }
+
+    for (const opcion of opciones) {
+      if (this.#esOpcionInvalida(opcion)) {
+        throw this.generarError('Cada opción debe cumplir el contrato OpenAPI.');
       }
     }
+  }
+
+  #esOpcionInvalida(opcion) {
+    return !opcion || typeof opcion !== 'object' ||
+      Array.isArray(opcion) ||
+      (opcion.nombre !== undefined && typeof opcion.nombre !== 'string') ||
+      (opcion.valor !== undefined && typeof opcion.valor !== 'string');
+  }
+
+  #esEstructuraPedidoInvalida(datos) {
+    return !datos || typeof datos !== 'object' ||
+      Array.isArray(datos) ||
+      !Array.isArray(datos.items) ||
+      datos.items.length === 0;
   }
 
   crearPedidoTemporal(codigoQr, datos) {
