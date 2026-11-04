@@ -1,0 +1,141 @@
+name: Quality
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+  push:
+    branches:
+      - develop
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Documentación y pruebas
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Ejecutar pruebas
+        run: npm test
+
+      - name: Validar archivos JSON
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          function walk(directory) {
+            return fs.readdirSync(directory, { withFileTypes: true })
+              .flatMap(entry => {
+                const fullPath = path.join(directory, entry.name);
+                if (entry.isDirectory() && entry.name !== 'node_modules') {
+                  return walk(fullPath);
+                }
+                return entry.isFile() && entry.name.endsWith('.json')
+                  ? [fullPath]
+                  : [];
+              });
+          }
+
+          for (const file of walk('.')) {
+            JSON.parse(fs.readFileSync(file, 'utf8'));
+            console.log(`JSON válido: ${file}`);
+          }
+          NODE
+
+      - name: Validar archivos YAML
+        shell: bash
+        run: |
+          ruby <<'RUBY'
+          require 'yaml'
+
+          files = Dir.glob('**/*.{yml,yaml}', File::FNM_EXTGLOB)
+          files.reject! { |file| file.start_with?('node_modules/') }
+
+          files.each do |file|
+            YAML.load_file(file)
+            puts "YAML válido: #{file}"
+          end
+          RUBY
+
+      - name: Validar enlaces locales de Markdown
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          function walk(directory) {
+            return fs.readdirSync(directory, { withFileTypes: true })
+              .flatMap(entry => {
+                const fullPath = path.join(directory, entry.name);
+                if (entry.isDirectory() && entry.name !== 'node_modules') {
+                  return walk(fullPath);
+                }
+                return entry.isFile() && entry.name.endsWith('.md')
+                  ? [fullPath]
+                  : [];
+              });
+          }
+
+          const missing = [];
+
+          for (const file of walk('.')) {
+            const content = fs.readFileSync(file, 'utf8');
+            const links = content.matchAll(/\[[^\]]+\]\(([^)]+)\)/g);
+
+            for (const match of links) {
+              const target = match[1].trim();
+
+              if (
+                !target ||
+                target.startsWith('http://') ||
+                target.startsWith('https://') ||
+                target.startsWith('#') ||
+                target.startsWith('mailto:')
+              ) {
+                continue;
+              }
+
+              const localTarget = target.split('#')[0];
+              const resolved = path.resolve(path.dirname(file), localTarget);
+
+              if (!fs.existsSync(resolved)) {
+                missing.push(`${file} -> ${target}`);
+              }
+            }
+          }
+
+          if (missing.length > 0) {
+            console.error('Enlaces locales inexistentes:');
+            console.error(missing.join('\n'));
+            process.exit(1);
+          }
+
+          console.log('Enlaces locales válidos.');
+          NODE
+
+      - name: Revisar formato Markdown
+        continue-on-error: true
+        uses: DavidAnson/markdownlint-cli2-action@v20
+        with:
+          globs: |
+            **/*.md
+            !node_modules/**
