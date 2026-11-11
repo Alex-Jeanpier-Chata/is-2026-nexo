@@ -1,175 +1,240 @@
-HELA — Guía de contribución
-Equipo Nexo · Ingeniería de Software I · UNJBG · 2026-II
+# HELA — Guía de contribución y gestión de versiones
 
-1. Alcance
-Este documento establece las condiciones para proponer, desarrollar, revisar, integrar y versionar cambios en HELA. Se aplica al código fuente, la documentación, la configuración y las dependencias del proyecto.
+**Equipo Nexo · Ingeniería de Software I · UNJBG · 2026-II**
 
-La guía complementa los acuerdos de desarrollo del equipo y el estándar de construcción. Las decisiones técnicas y los requisitos aprobados conservan su vigencia; cualquier modificación de su alcance debe discutirse y registrarse antes de integrarse.
+| Control documental | Registro |
+|---|---|
+| Versión de la guía | 1.0 — revisión para integración |
+| Última actualización | 10 de noviembre de 2026 |
+| Fecha de aprobación | Pendiente de aprobación en el PR |
+| Instancia de aprobación | Equipo Nexo, bajo coordinación de Oscar Fabian Choque Palza |
+| Repositorio | [Alex-Jeanpier-Chata/is-2026-nexo](https://github.com/Alex-Jeanpier-Chata/is-2026-nexo) |
 
-La práctica de contribución de Nexo se basa en cambios pequeños, integración frecuente y revisión entre integrantes. Ningún cambio se incorpora al tronco sin un pull request aprobado por otra persona y sin el resultado documentado del control de comportamiento correspondiente.
+## 1. Propósito y alcance
 
-2. Organización del repositorio
-El repositorio oficial de HELA utiliza dos ramas permanentes:
+Esta guía establece cómo el Equipo Nexo propone, desarrolla, revisa, integra y versiona las modificaciones de **HELA**, un sistema de gestión para restaurantes. Se aplica al código, las interfaces, la documentación, la configuración y las dependencias del repositorio.
 
-develop es el tronco operativo: reúne las contribuciones revisadas que forman parte del desarrollo compartido.
-main conserva los estados estables del sistema. Los cambios procedentes de develop se trasladan mediante un pull request específico y revisado.
-El trabajo individual se realiza en ramas de tema, creadas a partir de develop. Estas ramas se destinan a una tarea concreta y se integran tan pronto como el cambio pueda comprobarse sin comprometer el funcionamiento del tronco.
+El trabajo se organiza alrededor de cambios pequeños, tareas identificables y revisión entre integrantes. **Ningún cambio se integra en el tronco sin un pull request (PR) aprobado por una persona distinta de su autor y sin registrar el control de comportamiento correspondiente.**
 
-Un issue identifica una tarea o problema; un commit registra un cambio en el historial; un pull request (PR) permite revisar ese cambio antes de integrarlo; y una etiqueta (tag) identifica una versión específica del proyecto.
+La guía complementa los [acuerdos de desarrollo del equipo](docs/proceso/HELA_Guia_Desarrollo_y_Contribucion_v1.0.md), el [estándar de construcción S10](docs/proceso/HELA_S10_Estandar_Construccion_v1.1.md) y los acuerdos de organización de la Semana 03. No reemplaza requisitos, decisiones de arquitectura ni contratos de interfaces previamente aprobados.
 
-3. Flujo de contribución
-Definir el trabajo. Cada contribución se vincula con un issue o elemento del tablero que indique el objetivo, el responsable y los criterios de aceptación. Las dudas que afecten requisitos o decisiones vigentes se resuelven en ese registro.
-Preparar la rama. Se actualiza develop y se crea una rama de tema con el nombre establecido en esta guía. La rama contiene un objetivo acotado.
-Desarrollar el cambio. El autor modifica únicamente los elementos necesarios y sigue el estándar de construcción, el contrato de interfaces y la documentación vigente que correspondan a su tarea.
-Registrar los cambios. Los commits deben ser comprensibles, coherentes y estar vinculados a la tarea. Antes de confirmarlos se revisan las diferencias y los errores de formato.
-Comprobar el resultado. El autor ejecuta el control aplicable, registra qué comprobó y consigna su resultado real. Si existe una limitación o un fallo, debe quedar indicado.
-Solicitar revisión. Se publica la rama y se abre un PR hacia develop. Otro integrante revisa las modificaciones y solicita correcciones cuando sean necesarias.
-Integrar y actualizar la tarea. La integración se realiza solo después de la aprobación independiente y de verificar los controles. El issue o elemento del tablero se actualiza con el resultado y la referencia al PR.
-El PR debe describir el cambio, explicar su motivo, identificar la tarea, indicar las verificaciones realizadas y mencionar las limitaciones conocidas. La plantilla de pull request es el punto de partida para registrar esta información.
+## 2. Integrantes y responsabilidades
 
-Entorno y comprobaciones disponibles
-HELA utiliza Git, Node.js y npm. Para trabajar con una copia nueva del repositorio:
+Las funciones se distribuyen conforme a los roles existentes del equipo y a las verificaciones del estándar S10. La coordinación asigna responsables concretos a cada tarea en su issue; una persona puede desempeñar varias funciones, **pero nunca aprobar su propio PR**.
 
-git clone https://github.com/Alex-Jeanpier-Chata/is-2026-nexo.git
-cd is-2026-nexo
-git switch develop
-npm ci
-npm test
+| Integrante | Función principal | Responsabilidades en el proceso de contribución |
+|---|---|---|
+| **Oscar Fabian Choque Palza** | Coordinación del equipo | Coordina el tablero y las tareas, supervisa plazos y excepciones de ramas, consolida las métricas de Git y valida con el equipo la versión que se cerrará. Revisa formato y criterios de medición según S10. |
+| **Alex Jeanpier Chata Chino** | Administración del repositorio e integración | Revisa y administra las protecciones de `develop` y `main`, coordina las integraciones y la publicación de etiquetas anotadas. Comprueba los aspectos técnicos de funciones, dependencias y conflictos de integración, según su alcance. |
+| **Helber Junior Lope Apomayta** | Custodia de OpenAPI y coherencia técnica | Verifica que los cambios de interfaces y documentación conserven el contrato OpenAPI y la terminología de HELA. Revisa nombres y convenciones del código cuando correspondan y contribuye a la revisión cruzada de PR. |
+| **Elvis Ronald Arocutipa Quispe** | Consolidación y control de entregables | Consolida evidencias, notas de versión e informes; verifica comentarios, documentación y registro de controles de comportamiento. Coordina la revisión humana de los cambios conforme al estándar S10. |
 
-El proyecto dispone también de npm run dev para iniciar el servidor en modo de desarrollo. Los comandos vigentes se consultan en package.json; no se consideran disponibles herramientas o scripts que todavía no estén configurados allí.
+**Responsabilidades compartidas.** El **autor** desarrolla y verifica el cambio; el **revisor** comprueba el contenido de otra persona; el **integrador** confirma aprobaciones y controles antes de fusionar; y el **responsable del issue** actualiza la tarea y conserva la evidencia. Si Alex es autor de un PR, la revisión debe hacerla otro integrante; la administración del repositorio no sustituye la aprobación independiente.
 
-4. Política de ramas
-R-01. Rama de integración. Las contribuciones ordinarias se incorporan a develop. main se mantiene como rama estable. No se realizan cambios directos sobre ninguna de las dos ramas.
+El equipo procura emitir un primer comentario de revisión dentro de las 24 horas siguientes a la apertura de un PR, conforme a los acuerdos S03. Las menciones directas se responden dentro de las 24 horas hábiles.
 
-Fundamento: acuerdos de Nexo S03 y desarrollo basado en tronco descrito por Forsgren, Humble y Kim (2018, cap. 4).
-Verificación: quien integra comprueba el destino del PR y su historial.
-R-02. Identificación de ramas. Se utiliza la forma <tipo>/sNN-<descripcion>, con palabras breves y separadas por guiones. El nombre debe permitir reconocer la tarea; por ejemplo, docs/s11-guia-contribucion.
+## 3. Flujo de trabajo
 
-Los tipos utilizados son feat (funcionalidad), fix (corrección), docs (documentación), refactor (reorganización sin cambio de comportamiento), test (pruebas) y chore (mantenimiento o configuración).
+1. **Registrar la tarea.** Todo cambio parte de un issue o elemento del tablero que identifique el objetivo, su responsable, las referencias y los criterios de aceptación. Las dependencias o decisiones pendientes se declaran antes de iniciar el trabajo.
+2. **Crear una rama de tema.** Se parte de `develop` actualizado y se trabaja únicamente sobre el alcance de la tarea.
+3. **Realizar y registrar cambios.** Se aplican los estándares vigentes, se preparan commits coherentes y se mantiene la referencia al issue.
+4. **Comprobar el resultado.** El autor ejecuta las verificaciones aplicables y registra los comandos o procedimientos, resultados y limitaciones reales.
+5. **Solicitar revisión.** Se abre un PR dirigido a `develop`, utilizando la [plantilla del repositorio](.github/PULL_REQUEST_TEMPLATE.md). Otro integrante evalúa el cambio y formula observaciones cuando corresponda.
+6. **Integrar y cerrar.** Una vez resueltas las observaciones y vigente la aprobación, se integra el PR. El responsable actualiza el issue con los enlaces y las evidencias de aceptación.
 
-Fundamento: convención de Nexo S03 y ramas de tema de Chacon y Straub (2014, sec. 3.4).
-Verificación: el revisor contrasta el nombre de la rama con su tarea asociada.
-R-03. Duración. Los cambios se organizan para integrarse preferentemente dentro de un día. La duración máxima ordinaria es de tres días calendario, medida desde el primer commit de la rama hasta su integración. Si surge un impedimento, se registra oportunamente en el tablero y se decide si el trabajo puede dividirse en partes verificables o requiere una excepción justificada.
+HELA utiliza Git, Node.js y npm. El entorno se obtiene del repositorio oficial y las dependencias se instalan con `npm ci`. Los controles actualmente disponibles incluyen `npm test` y, para cambios de Git, `git diff --check` o `git diff --cached --check`. Los comandos que todavía no figuren en `package.json` no se consideran controles implementados.
 
-El límite conserva el acuerdo de Nexo S03. Frente a la referencia de ramas de menos de un día indicada en Accelerate, considera que los integrantes desarrollan el proyecto a tiempo parcial y deben compatibilizarlo con sus actividades académicas.
+## 4. Política de ramas
 
-Fundamento: Forsgren, Humble y Kim (2018, cap. 4) y acuerdos de Nexo S03.
-Verificación: el responsable del tablero compara el primer commit y la fecha de integración, y revisa las excepciones registradas.
-R-04. Trabajo simultáneo. El equipo limita a tres ramas de tema activas el trabajo paralelo, sin contar develop y main, y procura mantener menos cuando la organización de las tareas lo permita. Una rama sin actividad debe revisarse, no permanecer abierta indefinidamente.
+**R-01. Tronco y rama estable.** `develop` es el tronco operativo donde se integran los cambios revisados; `main` conserva los estados estables. La incorporación de `develop` a `main` también exige PR y revisión. No se realizan cambios directos a ninguna de las dos ramas.
 
-Fundamento: límite definido para Nexo tomando como referencia el indicador de menos de tres ramas activas de Accelerate (2018, cap. 4).
-Verificación: el coordinador contrasta las ramas remotas con sus tareas y responsables.
-R-05. Integración y protección. Toda contribución requiere un PR, la aprobación de otro integrante y un control de comportamiento documentado. Se prohíbe reescribir de manera forzada el historial compartido o eliminar las ramas principales. Las protecciones de GitHub deben respaldar estas condiciones.
+- *Fundamento:* acuerdos Nexo S03; Forsgren, Humble y Kim (2018, cap. 4).
+- *Verificación:* Alex, o el integrador designado, comprueba las ramas de origen y destino, el PR y su historial.
 
-Fundamento: regla de integración del curso S11; Chacon y Straub (2014, sec. 3.6); acuerdos de Nexo S03.
-Verificación: quien integra comprueba las aprobaciones, los controles anotados y las reglas de protección aplicables.
-R-06. Cierre de ramas. Las ramas integradas dejan de ser necesarias una vez comprobado que su trabajo está en el tronco. Si una rama no se integra, su contenido y el motivo de la decisión se conservan en el issue o tablero antes de cerrarla. No se pierde trabajo pendiente por el solo hecho de retirar una rama.
+**R-02. Nomenclatura.** La forma ordinaria es `<tipo>/sNN-<descripcion>`, donde **`sNN` es la semana académica del curso**, escrita con dos cifras (`s03`, `s10`, `s11`); no representa el número de sprint. Los tipos admitidos son `feat`, `fix`, `docs`, `refactor`, `test` y `chore`. Ejemplo: `docs/s11-guia-contribucion`.
 
-Fundamento: procedimiento de decisión y partición de ramas de la práctica S11.
-Verificación: el responsable del tablero comprueba la referencia al PR o al registro de trabajo pendiente.
-5. Política de commits
-C-01. Mensajes uniformes. Los mensajes se escriben en español y siguen la estructura <tipo>: <acción en imperativo>. El asunto debe describir el cambio de forma concreta y ocupar, de preferencia, alrededor de 50 caracteres.
+Para una tarea de mantenimiento sin semana específica se utiliza `<tipo>/issue-<numero>-<descripcion>`; por ejemplo, `fix/issue-28-validacion-pedido`. La referencia al issue se mantiene también en el PR.
 
-Fundamento: Chacon y Straub (2014, sec. 5.2, p. 131) y convención de Nexo S03.
-Verificación: el revisor lee los mensajes del PR.
-C-02. Cambios coherentes. Cada commit reúne modificaciones vinculadas a una misma finalidad. No se mezclan tareas independientes ni se utilizan mensajes imprecisos como «avances» o «cambios varios».
+- *Fundamento:* convención de Nexo S03; Chacon y Straub (2014, sec. 3.4); extensión para tareas no semanales acordada en esta guía.
+- *Verificación:* el revisor compara el nombre de la rama con la tarea vinculada.
 
-Fundamento: Chacon y Straub (2014, sec. 5.2, p. 130).
-Verificación: el revisor compara el mensaje con los archivos y diferencias del commit.
-C-03. Explicación y trazabilidad. Cuando el asunto no sea suficiente, se agrega un cuerpo después de una línea en blanco para explicar el motivo del cambio y su relación con el comportamiento anterior. El asunto o el cuerpo identifica el issue o elemento del tablero. En refactorizaciones se consigna además la heurística aplicada.
+**R-03. Vida de las ramas.** Se procura integrar cambios en menos de un día. El límite ordinario de Nexo es **tres días calendario**, medido desde el primer commit hasta la integración, conforme al acuerdo S03 y a la disponibilidad académica del equipo. La referencia de *Accelerate* es una duración inferior a un día, por lo que cualquier periodo mayor debe justificarse.
 
-Fundamento: Chacon y Straub (2014, sec. 5.2, p. 131); regla de trazabilidad S11 y estándar de construcción S10.
-Verificación: el revisor contrasta la referencia y el motivo con la tarea y el cambio realizado.
-C-04. Revisión previa. Antes de confirmar modificaciones se ejecuta git diff --check; si los archivos ya están preparados con git add, se utiliza git diff --cached --check. Los errores detectados se corrigen antes del commit.
+Cuando exista riesgo de superar el límite, el autor informa el impedimento dentro de las 24 horas de detectarlo y solicita una excepción **antes del vencimiento**, en el issue o tablero. La solicitud indica motivo, alcance pendiente, responsable y nueva fecha de revisión. **Oscar autoriza o rechaza la excepción** tras revisar su impacto con Alex; la decisión y fecha quedan registradas en el issue. Si Oscar es el solicitante, **Alex registra la autorización con la revisión de otro integrante** para evitar una autoaprobación. Siempre se prefiere dividir la tarea en cambios verificables.
 
-Fundamento: Chacon y Straub (2014, sec. 5.2, p. 130).
-Verificación: el autor realiza el control y el revisor comprueba que no se incorporen defectos evidentes de formato.
-Ejemplo de mensaje:
+- *Fundamento:* acuerdos Nexo S03; Forsgren, Humble y Kim (2018, cap. 4); regla de partición S11.
+- *Verificación:* Oscar coteja fechas y excepciones documentadas; Elvis comprueba que se conserven en el informe cuando corresponda.
 
+**R-04. Ramas simultáneas.** Se mantiene un máximo operativo de **tres ramas de tema activas**, sin contar `develop` y `main`; el equipo procura trabajar con menos. Este umbral debe evaluarse con los resultados reales del equipo frente a la referencia de menos de tres ramas activas de *Accelerate*.
+
+- *Fundamento:* decisión de organización del equipo a ratificar en el PR; Forsgren, Humble y Kim (2018, cap. 4).
+- *Verificación:* Oscar revisa las ramas remotas y su asociación con tareas activas.
+
+**R-05. Integración y conservación.** Ninguna rama se integra sin PR, aprobación independiente y control de comportamiento documentado. No se permite reescribir de manera forzada el historial compartido, ni eliminar las ramas principales. Las ramas de tema ya integradas se retiran cuando se comprueba que su trabajo está en el tronco; las pendientes se integran, dividen o cierran conservando su trazabilidad.
+
+- *Fundamento:* regla de integración S11; Chacon y Straub (2014, secs. 3.6 y 6.2).
+- *Verificación:* Alex comprueba el historial, las aprobaciones y el registro de las decisiones en el issue.
+
+## 5. Política de commits
+
+**C-01. Mensajes.** Los commits se escriben en español con el formato `<tipo>: <acción en imperativo>`. El asunto es específico y, de preferencia, de unos 50 caracteres. Se evita «cambios varios» o «avance».
+
+**C-02. Unidad de cambio.** Cada commit contiene una modificación lógica y coherente con la tarea; las acciones distintas se registran por separado.
+
+**C-03. Motivo y trazabilidad.** Cuando sea necesario, el cuerpo del mensaje explica por qué se modificó el comportamiento o la estructura, separado del asunto por una línea en blanco. El asunto o el cuerpo hace referencia al issue. En refactorizaciones se identifica también la heurística de S10.
+
+**C-04. Comprobación previa.** Antes de confirmar se revisan las diferencias y se ejecuta `git diff --check`; para cambios ya preparados se utiliza `git diff --cached --check`. Los errores se corrigen antes del commit. Los mensajes anteriores a la adopción de esta política se conservan sin reescribir el historial publicado.
+
+Ejemplo:
+
+```text
 refactor: simplifica la validación del pedido
 
 Aplica la heurística G28 a la validación de CU-06.
-Refs #XX
+Refs #28
+```
 
-XX representa el número del issue correspondiente. Los mensajes anteriores a la adopción de esta política se conservan sin reescribir el historial publicado.
+- *Fundamento de C-01 a C-04:* Chacon y Straub (2014, sec. 5.2, pp. 130-131); convención Nexo S03; trazabilidad y heurísticas de S10-S11.
+- *Verificación:* el autor comprueba las diferencias; el revisor contrasta los mensajes, su contenido y las referencias en el historial del PR.
 
-6. Política de etiquetas y versiones
-V-01. Tipo de etiqueta. Las versiones entregadas se identifican mediante etiquetas anotadas, que almacenan un mensaje, la identidad de quien las crea y su fecha. No se usan etiquetas ligeras para establecer líneas base de entrega.
+## 6. Revisión, aprobación e integración de PR
 
-Fundamento: Chacon y Straub (2014, sec. 2.6, p. 56).
-Verificación: el responsable del cierre comprueba en Git que la etiqueta remota corresponde a un objeto de tipo tag.
-V-02. Identificación y alcance. El equipo utiliza una numeración legible basada en vMAYOR.MENOR.PARCHE; para identificar cierres de sprint puede añadir el sufijo -sprintN. El número se define según la versión realmente cerrada. Solo se etiqueta un commit aprobado del tronco, después de integrar y comprobar los cambios que formarán parte de la entrega.
+Un PR puede aprobarse únicamente cuando cumple, según el tipo de cambio, los siguientes criterios:
 
-Fundamento: criterio de identificación de versiones del equipo; Chacon y Straub (2014, sec. 5.3) y Sommerville (2016, sec. 25.4).
-Verificación: quien prepara la entrega comprueba el nombre, el commit señalado y el alcance aprobado.
-V-03. Notas de versión. Cada cierre registra las capacidades incorporadas, las limitaciones o problemas conocidos y los requisitos de entorno necesarios para utilizar o reproducir esa versión. No se presentan cambios pendientes como funcionalidades entregadas.
+1. **Alcance y trazabilidad.** Existe una tarea con criterios de aceptación y el PR explica qué cambia, por qué y qué archivos o componentes afecta.
+2. **Consistencia.** La contribución respeta la arquitectura, los requisitos, el contrato OpenAPI cuando corresponda y el estándar de construcción S10.
+3. **Historial.** La rama y los commits cumplen las convenciones; no se agregan archivos ajenos a la tarea.
+4. **Control verificable.** El autor registra el procedimiento, la fecha y el resultado real de las comprobaciones. Para cambios de código se ejecutan las pruebas pertinentes, incluido `npm test` cuando corresponda. Para documentación se revisan contenido, enlaces y referencias.
+5. **Revisión independiente.** Otro integrante examina los cambios y registra su aprobación; el autor no puede aprobarse a sí mismo.
 
-Fundamento: IEEE Computer Society (2024, SWEBOK v4.0, KA 8, sec. 6.2).
-Verificación: un integrante distinto de quien etiqueta contrasta las notas con el historial y la documentación del proyecto.
-V-04. Publicación e integridad. La etiqueta se envía expresamente al repositorio remoto y, una vez publicada como línea base de entrega, no se mueve para apuntar a otro commit.
+Las observaciones del revisor se atienden en la **misma conversación del PR**. El autor responde, corrige mediante nuevos commits y solicita una nueva comprobación cuando sea necesaria. Cada comentario se marca como resuelto solo cuando la corrección está verificada o existe una decisión documentada aceptada por el revisor.
 
-Fundamento: Chacon y Straub (2014, sec. 2.6, pp. 58-59); principio de recuperación de versiones del curso S11.
-Verificación: el responsable del cierre comprueba su presencia en GitHub y la correspondencia con el commit registrado.
-Para publicar una etiqueta anotada se utiliza git tag -a con el nombre y las notas aprobadas, seguido de git push origin <nombre-etiqueta>. La etiqueta no se publica automáticamente al enviar una rama.
+**Si se agregan commits después de una aprobación, la revisión debe renovarse antes de integrar.** Las reglas de GitHub deben invalidar aprobaciones anteriores cuando cambie el contenido; si ese ajuste aún no está activo, el integrador solicitará expresamente una nueva revisión. No se presume que la aprobación antigua cubra modificaciones posteriores.
 
-7. Política de dependencias
-D-01. Registro. Las dependencias directas de HELA se declaran en package.json. El archivo package-lock.json se mantiene versionado para conservar las versiones resueltas e instalar ese conjunto de paquetes mediante npm ci.
+El primer comentario de revisión debe emitirse en un máximo de 24 horas según S03. Esta primera respuesta no equivale a la aprobación definitiva.
 
-Fundamento: IEEE Computer Society (2024, SWEBOK v4.0, KA 4, sec. 2.4) y documentación del gestor npm.
-Verificación: el revisor comprueba que ambos archivos sean coherentes y formen parte del cambio cuando corresponda.
-D-02. Versiones controladas. Las dependencias directas nuevas se declaran con una versión exacta. Las declaraciones existentes que no cumplan este criterio se adecúan mediante tareas y PR específicos, para no introducir cambios ajenos al objetivo de otra contribución.
+- *Fundamento:* acuerdos Nexo S03; DoD del equipo; regla de integración S11; estándar S10.
+- *Verificación:* el revisor y Alex comprueban la aprobación vigente, los comentarios resueltos y el registro del control antes del merge.
 
-Fundamento: regla de versiones fijadas de la práctica S11.
-Verificación: el revisor examina la versión declarada, el archivo de bloqueo y la justificación de los cambios.
-D-03. Incorporación justificada. Una dependencia nueva solo puede incorporarse mediante PR. La solicitud debe responder tres preguntas: para qué se necesita y qué permite reutilizar, qué licencia tiene y quién la mantiene. Se revisa también si existen alternativas en el proyecto y riesgos conocidos de mantenimiento o seguridad.
+### Conflictos de integración
 
-Fundamento: IEEE Computer Society (2024, SWEBOK v4.0, KA 4, sec. 2.4) y regla de admisión de la práctica S11.
-Verificación: el revisor comprueba las respuestas y la modificación de los archivos de dependencias antes de aprobar.
-D-04. Actualización y retiro. Las actualizaciones o eliminaciones se registran como cambios independientes cuando puedan afectar el comportamiento del sistema. Se justifican y se comprueban antes de integrarse.
+Si Git detecta cambios incompatibles entre la rama de trabajo y `develop`, **el autor de la rama** identifica los archivos afectados y resuelve los conflictos con la versión vigente del tronco como referencia. No se aceptan automáticamente ambas versiones ni se descartan cambios de otro integrante sin analizar su efecto.
 
-Fundamento: IEEE Computer Society (2024, SWEBOK v4.0, KA 4, sec. 2.4).
-Verificación: el revisor contrasta los cambios de versiones y el resultado de las pruebas o controles ejecutados.
-Actualmente, package.json declara Express como ^5.2.1, mientras que el archivo de bloqueo registra la versión resuelta 5.2.1. Esa declaración existente requiere una evaluación específica para ajustarse a la regla de versiones directas exactas; no se modifica de forma incidental en otro PR.
+Después de resolverlos, el autor revisa las diferencias finales, ejecuta los controles pertinentes y describe en el PR qué se decidió y qué resultado obtuvo. **Alex comprueba la solución técnica o asigna la comprobación a otro integrante cuando sea autor del cambio; Elvis contrasta el control de comportamiento.** Si la resolución introduce modificaciones posteriores a una aprobación, el PR debe ser revisado de nuevo.
 
-8. Revisión y aceptación
-La revisión independiente y la comprobación del comportamiento son condiciones distintas. El autor demuestra que evaluó el resultado del cambio; el revisor determina si la contribución es coherente y está suficientemente verificada.
+No se utilizará `push --force` sobre ramas compartidas para ocultar o resolver conflictos. Si el conflicto implica un requisito o una decisión arquitectónica, se registra y acuerda su resolución antes de integrar.
 
-En cada PR deben constar:
+- *Fundamento:* Sommerville (2016, sec. 25.1); Chacon y Straub (2014, sec. 3.6); regla de revisión S11.
+- *Verificación:* diferencia final del PR, explicación del conflicto, controles ejecutados y aprobación renovada.
 
-El issue o elemento del tablero y el propósito de la modificación.
-Los archivos o componentes afectados y, cuando corresponda, las decisiones técnicas relacionadas.
-El control de comportamiento realizado, el procedimiento utilizado y su resultado.
-Las limitaciones conocidas y las observaciones resueltas durante la revisión.
-La aprobación de una persona distinta del autor antes de la integración.
-Para los cambios de código, el control incluye las pruebas existentes que correspondan (npm test) y la comprobación del comportamiento modificado. Para cambios documentales, se revisan consistencia, referencias y rutas, además de los controles ejecutables que resulten pertinentes. No se declara satisfactoria una prueba que no se haya realizado.
+## 7. Protección de ramas en GitHub
 
-Una contribución se considera terminada cuando satisface los criterios de aceptación de su tarea, respeta el estándar de construcción y la documentación vigente, supera las comprobaciones correspondientes, recibe aprobación independiente y está integrada en develop. La sola existencia de un commit o de un PR abierto no constituye una tarea terminada.
+Las siguientes condiciones deben estar configuradas y verificadas tanto para **`develop`** como para **`main`**:
 
-Responsabilidades
-Función	Responsabilidad y evidencia
-Autor	Desarrolla el cambio, mantiene la referencia a la tarea y documenta sus verificaciones en el PR.
-Revisor	Examina el trabajo de otra persona, registra observaciones y aprueba únicamente cuando se cumplen los criterios.
-Integrador	Comprueba revisión y controles antes de fusionar; el registro del PR acredita la integración.
-Coordinación del equipo	Supervisa las ramas activas, los impedimentos y la actualización del tablero.
-Responsable de versión	Verifica el estado que se entrega, sus notas y la publicación de la etiqueta.
-Administración del repositorio	Mantiene las reglas que impiden la integración directa y la alteración del historial de las ramas principales.
-Estas funciones se asignan a integrantes identificables mediante los issues, PR y acuerdos de coordinación. La persona autora de un cambio no sustituye la revisión de otro integrante.
+| Condición | Efecto esperado |
+|---|---|
+| Exigir un PR antes de integrar | Impide incorporar cambios directamente a la rama protegida. |
+| Requerir al menos una aprobación independiente | Impide que la revisión del autor sustituya a la de otro integrante. |
+| Invalidar aprobaciones ante nuevos cambios | Obliga a revisar nuevamente el contenido modificado después de la aprobación. |
+| Exigir la resolución de conversaciones | Evita integrar con observaciones de revisión sin resolver. |
+| Bloquear eliminaciones y actualizaciones forzadas | Protege el historial y las líneas base compartidas. |
 
-9. Seguimiento de la política
-Para verificar que las reglas se cumplen, Nexo utiliza registros de Git y GitHub, no estimaciones personales. En cada corte de evaluación o entrega se revisan:
+**Alex** administra estas reglas y verifica su efecto con Oscar. Si una protección no puede aplicarse por permisos o restricciones de GitHub, se registra la limitación en el issue correspondiente y **no se declara configurada**. Hasta corregirla, el integrador debe comprobar manualmente las mismas condiciones y dejar evidencia en el PR.
 
-Ramas activas: cantidad de ramas de trabajo abiertas frente al límite declarado.
-Duración de integración: tiempo desde el primer commit de cada rama integrada hasta su incorporación al tronco.
-Calidad del historial: commits del periodo cuyos mensajes cumplen la convención frente al total revisado.
-Revisión efectiva: PR integrados con aprobación independiente y control de comportamiento registrado frente al total integrado.
-Versiones identificables: etiquetas anotadas que están publicadas en el repositorio remoto.
-Las cifras, las fechas de corte y los enlaces de evidencia se consignan en el informe de la entrega correspondiente. Las excepciones se explican sin modificar retrospectivamente los registros publicados.
+No se declara como obligatorio un control automático que todavía no esté implementado. El trabajo de automatización se incorpora únicamente cuando haya sido aprobado e integrado.
 
-10. Referencias
-Chacon, S., & Straub, B. (2014). Pro Git (2.ª ed.). Apress.
-Forsgren, N., Humble, J., & Kim, G. (2018). Accelerate: The Science of Lean Software and DevOps. IT Revolution Press.
-IEEE Computer Society. (2024). Guide to the Software Engineering Body of Knowledge (SWEBOK Guide), versión 4.0.
-Sommerville, I. (2016). Software Engineering (10.ª ed.). Pearson.
-Universidad Nacional Jorge Basadre Grohmann. (2026). Guía práctica y guía de referencia de Ingeniería de Software I, Semana 11.
-Equipo Nexo. Guía de desarrollo y acuerdos S03; estándar de construcción HELA S10.
-Esta guía rige los cambios posteriores a su aprobación e integración en develop. El historial compartido anterior se conserva y cualquier excepción relevante queda documentada mediante los mecanismos de seguimiento del proyecto.
+- *Fundamento:* regla de integración y configuración del curso S11; acuerdos Nexo S03; documentación oficial de GitHub sobre reglas de protección.
+- *Verificación:* Alex conserva la configuración o el registro de la limitación; Oscar comprueba que las integraciones cumplan la política.
+
+## 8. Dependencias y documentación técnica
+
+**D-01. Registro reproducible.** Las dependencias se declaran en `package.json` y sus versiones resueltas se conservan en `package-lock.json`. La instalación reproducible se realiza mediante `npm ci`.
+
+**D-02. Versiones controladas.** Las dependencias directas nuevas se incorporan con versión exacta. Una declaración anterior distinta se ajusta mediante un cambio específico, revisado, sin añadir modificaciones ajenas a otros PR.
+
+**D-03. Incorporación responsable.** Toda dependencia nueva requiere un PR que responda: **para qué sirve y qué reutiliza, qué licencia tiene y quién la mantiene**. Se consideran alternativas existentes y riesgos conocidos.
+
+**D-04. Actualización y retiro.** Los cambios de versiones o eliminación de dependencias se justifican y se comprueba su impacto antes de integrarlos.
+
+Actualmente, Express se declara como `^5.2.1` en `package.json`, mientras que el archivo de bloqueo registra la versión resuelta `5.2.1`. Su adecuación a una versión directa fija requiere una tarea específica; no se modifica incidentalmente en un PR documental.
+
+- *Fundamento de D-01 a D-04:* IEEE Computer Society (2024, SWEBOK v4.0, KA 4, sec. 2.4); regla de dependencias del curso S11.
+- *Verificación:* Alex revisa la necesidad, las versiones y el control de comportamiento; Elvis comprueba que la justificación y la evidencia queden registradas.
+
+### Actualización de documentación
+
+El **autor de una modificación** actualiza, dentro del mismo PR, los documentos necesarios para que el repositorio refleje su estado real:
+
+| Tipo de modificación | Documentación que debe revisarse | Verificación principal |
+|---|---|---|
+| Interfaces HTTP, solicitudes o respuestas | Contrato OpenAPI y referencias asociadas | **Helber** contrasta el contrato y su implementación. |
+| Arquitectura, responsabilidades de módulos o decisiones técnicas | Documentos de arquitectura y decisiones vigentes | **Alex** verifica la coherencia con el diseño aprobado. |
+| Dependencias, comandos o configuración del entorno | `package.json`, `package-lock.json` y guías de ejecución afectadas | **Alex** comprueba la configuración; **Elvis** revisa que las instrucciones sean consistentes. |
+| Funcionalidad o criterios de aceptación | Especificación y documentación funcional relacionada, cuando corresponda | **Oscar** coordina la validación con el responsable del requisito. |
+| Entregas, versiones y evidencias | Notas de versión, registro de cambios e informe correspondiente | **Elvis** consolida las referencias y evidencias. |
+
+Cuando un cambio afecta una decisión aprobada, debe acordarse antes de modificar la documentación o su implementación. La actualización no se considera completa si deja inconsistencias entre código, contrato y documentos vigentes.
+
+## 9. Etiquetas y gestión de versiones
+
+**V-01. Identificación.** Las entregas se identifican con etiquetas **anotadas**. Se utiliza la forma `vMAYOR.MENOR.PARCHE`, con un sufijo descriptivo para un cierre de sprint cuando corresponda. La numeración debe reflejar el alcance efectivamente integrado y no se asigna automáticamente por la fecha.
+
+**V-02. Decisión y preparación.** **Alex propone el número y el commit que se etiquetará** a partir del historial de `develop`. **Oscar coordina su validación y autoriza el cierre con el acuerdo del equipo**; si Oscar es autor del cambio que define la entrega, la validación cruzada debe constar expresamente. **Elvis prepara las notas** con cambios incorporados, problemas conocidos y requisitos de entorno. Helber comprueba las referencias a interfaces cuando formen parte de la entrega.
+
+**V-03. Publicación y comprobación.** Tras el acuerdo, **Alex crea y publica la etiqueta anotada** sobre el commit aprobado. **Elvis verifica que las notas correspondan al historial** y Oscar comprueba la presencia de la etiqueta en el repositorio remoto. Una etiqueta publicada como línea base no se traslada a otro commit.
+
+**V-04. Recuperación.** Las notas de cada entrega indican el identificador de la etiqueta, las capacidades disponibles, las limitaciones conocidas y las condiciones necesarias para reconstruir esa versión. El contenido que siga en ramas pendientes no forma parte de la entrega.
+
+- *Fundamento de V-01 a V-04:* Chacon y Straub (2014, secs. 2.6 y 5.3); Sommerville (2016, sec. 25.4); IEEE Computer Society (2024, KA 8, sec. 6.2); acuerdo de responsabilidades del equipo.
+- *Verificación:* Oscar comprueba la autorización y la etiqueta remota; Alex acredita el commit y tipo de etiqueta; Elvis coteja las notas con la versión publicada.
+
+## 10. Cierre de tareas e incidencias
+
+Un issue pasa a **terminado** únicamente cuando se cumple su objetivo y criterios de aceptación, el cambio está integrado en `develop`, existen una revisión independiente y controles registrados, y la documentación relacionada está actualizada. Si el issue corresponde solo a una decisión o investigación, deben existir la decisión y su evidencia verificable, sin exigir un cambio de código inexistente.
+
+El **responsable asignado al issue** registra el resultado y añade los enlaces al PR, commits, verificaciones y documentos pertinentes. **Oscar comprueba el cumplimiento de los criterios** y coordina el cierre del elemento en el tablero. El issue de GitHub se cierra después de esa comprobación, por el responsable o la persona designada para mantener el tablero.
+
+No se cierra una tarea solo porque se creó una rama, se realizó un commit o se abrió un PR. Si queda trabajo parcial, el issue permanece abierto o se crea uno nuevo con el alcance pendiente y sus referencias. Los impedimentos y las decisiones no resueltas deben conservarse de manera visible.
+
+- *Fundamento:* Definición de Preparado (DoR) y Definición de Terminado (DoD) del Equipo Nexo S03; trazabilidad exigida por la práctica S11.
+- *Verificación:* Oscar revisa estado y criterios; Elvis comprueba que el registro incluya los enlaces de evidencia.
+
+## 11. Seguimiento de métricas
+
+El cumplimiento de la política se comprueba con registros de Git y GitHub, utilizando un corte de fechas definido y sin reconstruir cifras de memoria. **Oscar recopila los datos al cierre de cada semana de trabajo y en cada cierre de sprint**; **Elvis consolida las evidencias en el informe**, y **Oscar presenta los resultados al equipo y en la entrega académica cuando corresponda**. Los demás integrantes revisan los datos de sus PR y corrigen posibles omisiones antes del cierre.
+
+| Indicador | Criterio de medición | Evidencia |
+|---|---|---|
+| Ramas de tema abiertas | Cantidad de ramas activas al momento del corte, comparada con el máximo acordado. | Referencias remotas y tablero. |
+| Duración de las ramas integradas | Tiempo entre el primer commit de cada rama y su integración al tronco. | Historial y fecha de integración del PR. |
+| Conformidad de commits | Commits del periodo con mensajes acordes a la política, frente al total examinado. | Historial del periodo. |
+| Revisión y control de PR | PR integrados con aprobación independiente y control de comportamiento anotado, frente al total integrado. | Aprobaciones, conversaciones y registros del PR. |
+| Etiquetas anotadas | Número e identificación de etiquetas anotadas publicadas en el repositorio remoto. | Referencias y objetos de etiquetas. |
+
+El informe debe indicar el periodo, el momento del corte, los resultados, las fuentes y cualquier excepción o limitación. Si una cifra no puede determinarse de manera fiable, se declara esa limitación; no se inventa ni se sustituye por una estimación silenciosa. Los registros antiguos no se reescriben para aparentar cumplimiento.
+
+- *Fundamento:* procedimiento de recuento de la guía de referencia S11, apartado 11, y acuerdos de coordinación del Equipo Nexo.
+- *Verificación:* Oscar valida los cálculos; Elvis revisa que las cifras coincidan con sus enlaces y el informe.
+
+## 12. Referencias y control de vigencia
+
+### Documentos del equipo y del curso
+
+- **Equipo Nexo (08 de septiembre de 2026).** *Paquete de acuerdos del Equipo Nexo — Semana 03*, versión 0.1: acuerdos de coordinación, Definición de Preparado y Definición de Terminado. [Documento institucional](https://docs.google.com/document/d/1bq9Pmv0l-xHMwFKxcK6vDsX6mtLkdP_g/edit).
+- **Equipo Nexo (2026-II).** *HELA — Guía de Desarrollo y Contribución*, versión 1.0. Archivo [`docs/proceso/HELA_Guia_Desarrollo_y_Contribucion_v1.0.md`](docs/proceso/HELA_Guia_Desarrollo_y_Contribucion_v1.0.md).
+- **Equipo Nexo (Semana 10, 2026-II).** *HELA — Estándar de construcción del equipo*, versión 1.1. Archivo [`docs/proceso/HELA_S10_Estandar_Construccion_v1.1.md`](docs/proceso/HELA_S10_Estandar_Construccion_v1.1.md).
+- **UNJBG, Ingeniería de Software I (Semana 11, 2026-II).** *De la costumbre a la política: guía de contribución y repositorio bajo desarrollo basado en tronco*. [Guía práctica oficial](https://docs.google.com/document/d/1wqKGlSxW_t4iY94K_5qtzOoElx44WtaLXT2oPlEYQUc/edit).
+- **UNJBG, Ingeniería de Software I (Semana 11, 2026-II).** *Guía de referencia rápida: gestión de versiones y desarrollo basado en tronco*. [Documento de referencia](https://docs.google.com/document/d/1trxCKtJ2_ICfVIYy6O-ix6boJwCVRb60-6bId4W5Qqs/edit).
+
+### Bibliografía técnica
+
+- Chacon, S., & Straub, B. (2014). *Pro Git* (2.ª ed.). Apress.
+- Forsgren, N., Humble, J., & Kim, G. (2018). *Accelerate: The Science of Lean Software and DevOps*. IT Revolution Press.
+- IEEE Computer Society. (2024). *Guide to the Software Engineering Body of Knowledge (SWEBOK Guide)*, versión 4.0.
+- Sommerville, I. (2016). *Software Engineering* (10.ª ed.). Pearson.
+
+### Vigencia y actualización
+
+La guía entra en vigor cuando el Equipo Nexo la aprueba y el PR correspondiente queda integrado en `develop`. **Oscar coordina la aprobación con los cuatro integrantes; Alex conserva la versión publicada en el repositorio; Elvis registra la fecha de aprobación y las actualizaciones.** Toda modificación posterior debe indicar qué política cambia, su motivo y su efecto, y se integra mediante un nuevo PR revisado.
+
+El número de versión y la fecha de última actualización se modifican en el mismo PR que actualice esta guía. La fecha de aprobación se consigna cuando exista evidencia de aprobación; mientras tanto permanece como pendiente. Las decisiones previas y el historial ya publicado se preservan.
